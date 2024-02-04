@@ -433,7 +433,7 @@ class FileHandler:
 
     def __enter__(self):
         try:
-            self.in_file = open(self.file_name, "r")
+            self.in_file = open(self.file_name, "r", encoding="utf-8")
         except FileNotFoundError:
             print("ERROR: File '" + self.file_name + "' not found.")
             sys.exit()
@@ -1554,7 +1554,7 @@ class MetaAlignment:
 
         self.file_overwrite_error(file_name)
 
-        summary_file = open(file_name, "w")
+        summary_file = open(file_name, "w", encoding="utf-8")
         summary_out = self.get_summaries()
         header = '\t'.join(summary_out[0])
         new_summ = ['\t'.join(summary) for summary in summary_out[1]]
@@ -1569,7 +1569,7 @@ class MetaAlignment:
         for index, in_file_name in enumerate(self.in_files):
             out_file_name = in_file_name + "-seq-summary.txt"
             self.file_overwrite_error(out_file_name)
-            summary_file = open(out_file_name, "w")
+            summary_file = open(out_file_name, "w", encoding="utf-8")
             summary_out = self.get_taxon_summaries()
             header = '\t'.join(summary_out[0])
             summ = [[str(col) for col in element] for element in summary_out[1][index]]
@@ -1900,7 +1900,7 @@ class MetaAlignment:
     def write_partitions(self, file_name, part_format, codons):
         # write partitions file for concatenated alignment
         self.file_overwrite_error(file_name)
-        part_file = open(file_name, "w")
+        part_file = open(file_name, "w", encoding="utf-8")
         if part_format == "nexus":
             part_file.write(self.print_nexus_partitions(codons))
         if part_format == "raxml":
@@ -1931,7 +1931,7 @@ class MetaAlignment:
 
     def write_formatted_file(self, file_format, file_name, alignment):
         # write the correct format string into a file
-        out_file = open(file_name, "w")
+        out_file = open(file_name, "w", encoding="utf-8")
         if file_format == "phylip":
             out_file.write(self.print_phylip(alignment))
         elif file_format == "fasta":
