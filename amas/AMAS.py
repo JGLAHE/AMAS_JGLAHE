@@ -1,4 +1,6 @@
 #! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim:fileencoding=utf-8
 
 #   Program to calculate various statistics on a multiple sequence alignment
 #   and allow efficient manipulation of phylogenomic data sets
