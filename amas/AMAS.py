@@ -1022,7 +1022,7 @@ class DNAAlignment(Alignment):
 
         return at_content, gc_content
 
-class MetaAlignment():
+class MetaAlignment:
     """Class of multiple sequence alignments"""
 
     def __init__(self, **kwargs):
