@@ -414,7 +414,6 @@ Use AMAS <command> -h for help with arguments of the command of interest
         args = parser.parse_args(sys.argv[2:])
         return args
 
-
     def get_args_dict(self):
         # store arguments in a dictionary
         command = self.args.__dict__
@@ -640,12 +639,29 @@ class FileParser:
 
     def partitions_parse(self):
         # parse partitions file using regex
-        matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)
+        #matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)
+        # more permissive: handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files
+        matches = re.finditer(
+            r"""^[ \t]*                           # start of line w/ zero-or-more (just) whitespaces/tabs
+                (
+                 (?P<nexus>charset[ ]+)           # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
+                 |
+                 (?P<raxml>[A-Za-z0-9_+]+,[ \t]+) # case 2: RAxML/RAxML-NG model(+other pars); partition name
+                )?
+                (?P<partition_name>[A-Za-z0-9_]+) # case 3: just the partition name
+                [ ]*=[ ]*                         # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
+                (?P<numbers>[\\0-9, -]+)          # position ranges w/ stride (multiple intervals; from original regex)
+                (?P<nexus_term>[ ]*[;])?          # whitespace-prepended (or unprepended) ';' (nexus terminator)
+            """,
+            self.in_file_lines,
+            re.MULTILINE | re.VERBOSE
+        )
 
         # initiate list to store dictionaries with lists
         # of slice positions as values
         partitions = []
         add_to_partitions = partitions.append
+
         for match in matches:
             # initiate dictionary of partition name as key
             dict_of_dicts = {}
@@ -653,8 +669,10 @@ class FileParser:
             list_of_dicts = []
             add_to_list_of_dicts = list_of_dicts.append
             # get parition name and numbers from parsed partition strings
-            partition_name = match.group(2)
-            numbers = match.group(3)
+            partition_name = match.group('partition_name')
+            numbers = match.group('numbers')
+            # remove any whitespace padding '-' (to be consistent with partition-writing format)
+            numbers = re.sub(r"[ ]*-[ ]*", "-", numbers)
             # find all numbers that will be used to parse positions
             positions = re.findall(r"([^ ,]+)", numbers)
 
@@ -1355,7 +1373,6 @@ class MetaAlignment:
             trimmed_alignments = pool.map(self.trim_dict, self.alignment_objects)
 
         return trimmed_alignments
-
 
     def remove_unknown_chars(self, seq):
         # remove unknown characters from sequence
