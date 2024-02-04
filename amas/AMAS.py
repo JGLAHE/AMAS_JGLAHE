@@ -723,8 +723,18 @@ class Alignment:
         missing = str(self.get_missing())
         missing_percent = str(self.get_missing_percent())
         self.check_data_type()
-        summary = [name, taxa_no, self.length, cells, missing, missing_percent, \
-         str(self.variable_sites), str(self.prop_variable), str(self.parsimony_informative), str(self.prop_parsimony)]
+        summary = [
+            name,
+            taxa_no,
+            self.length,
+            cells,
+            missing,
+            missing_percent,
+            str(self.variable_sites),
+            str(self.prop_variable),
+            str(self.parsimony_informative),
+            str(self.prop_parsimony)
+        ]
         return summary
 
     def summarize_alignment_by_taxa(self):
@@ -736,8 +746,10 @@ class Alignment:
         lengths = (self.length for i in range(taxa_no))
         name = self.get_name()
         names = (name for i in range(taxa_no))
-        taxa_names = (taxon.replace(" ","_").replace(".","_").replace("'","") \
-         for taxon, missing_count, missing_percent in self.missing_records)
+        taxa_names = (
+            taxon.replace(" ","_").replace(".","_").replace("'","")
+            for taxon, missing_count, missing_percent in self.missing_records
+        )
         missing = (missing_count for taxon, missing_count, missing_percent in self.missing_records)
         missing_percent = (missing_percent for taxon, missing_count, missing_percent in self.missing_records)
         self.check_data_type()
@@ -821,8 +833,7 @@ class Alignment:
     def get_variable(self):
         # if all elements of a site without missing or ambiguous characters
         # are not the same, consider it variable
-        variable = len([site for site in self.no_missing_ambiguous \
-         if not self.all_same(site)])
+        variable = len([site for site in self.no_missing_ambiguous if not self.all_same(site)])
         return variable
 
     def get_parsimony_informative(self):
@@ -865,8 +876,7 @@ class Alignment:
 
     def get_matrix_cells(self):
     # count all matrix cells
-        self.all_matrix_cells = len(self.parsed_aln.values()) \
-         * int(self.length)
+        self.all_matrix_cells = len(self.parsed_aln.values()) * int(self.length)
         return self.all_matrix_cells
 
     def get_missing(self):
@@ -882,8 +892,12 @@ class Alignment:
     def get_missing_from_parsed(self):
         # get missing count and percent from parsed alignment
         # return a list of tuples with taxon name, count, and percent missing
-        self.missing_records = sorted([(taxon, self.get_missing_from_seq(seq), self.get_missing_percent_from_seq(seq)) \
-         for taxon, seq in self.parsed_aln.items()])
+        self.missing_records = sorted(
+            [
+                (taxon, self.get_missing_from_seq(seq), self.get_missing_percent_from_seq(seq))
+                for taxon, seq in self.parsed_aln.items()
+            ]
+        )
         return self.missing_records
 
     def get_missing_from_seq(self, seq):
@@ -906,8 +920,12 @@ class Alignment:
     def get_counts_from_parsed(self):
         # get counts of all characters from parsed alignment
         # return a list of tuples with taxon name and counts
-        return sorted([(taxon, self.get_counts_from_seq(seq)) \
-         for taxon, seq in self.parsed_aln.items()])
+        return sorted(
+            [
+                (taxon, self.get_counts_from_seq(seq))
+                for taxon, seq in self.parsed_aln.items()
+            ]
+        )
 
     def get_counts_from_seq(self, seq):
         # get all alphabet chars count for individual sequence
@@ -919,15 +937,16 @@ class Alignment:
         seq = next(iter(self.parsed_aln.values()))
         self.check = any(char in self.non_alphabet for char in seq)
         if self.check is True:
-            print("WARNING: found non-" + self.data_type + " characters. "\
-             "Are you sure you specified the right data type?")
+            print(
+                "WARNING: found non-" + self.data_type + " characters. "
+                "Are you sure you specified the right data type?"
+            )
 
 
 class AminoAcidAlignment(Alignment):
     """Alphabets specific to amino acid alignments"""
 
-    alphabet = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", \
-     "S", "T", "V", "W", "Y", "B", "J", "Z", "X", ".", "*", "-", "?"]
+    alphabet = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "B", "J", "Z", "X", ".", "*", "-", "?"]
     missing_ambiguous_chars = ["B", "J", "Z", "X", ".", "*", "-", "?"]
     missing_chars = ["X", ".", "*", "-", "?"]
     non_alphabet = ["O"]
@@ -949,18 +968,15 @@ class AminoAcidAlignment(Alignment):
 class DNAAlignment(Alignment):
     """Alphabets specific to DNA alignments"""
 
-    alphabet = ["A", "C", "G", "T", "K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X",  \
-     "N",  "O",  "-", "?"]
-    missing_ambiguous_chars = ["K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X",  \
-     "N",  "O",  "-", "?"]
+    alphabet = ["A", "C", "G", "T", "K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X", "N",  "O",  "-", "?"]
+    missing_ambiguous_chars = ["K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X", "N",  "O",  "-", "?"]
     missing_chars = ["X", "N", "O", "-", "?"]
     non_alphabet = ["E",  "F",  "I",  "L",  "P",  "Q",  "J",  "Z",  ".",  "*"]
 
     def get_summary(self):
         # get alignment summarry specific to nucleotide
         data = self.summarize_alignment()
-        new_data = data + self.get_atgc_content() \
-         + list(self.get_char_summary()[1])
+        new_data = data + self.get_atgc_content() + list(self.get_char_summary()[1])
         return new_data
 
     def get_taxa_summary(self):
@@ -976,8 +992,7 @@ class DNAAlignment(Alignment):
         # AT content is the first element of AT, GC content tuple
         # returned by get_atgc_from_seq()
         atgc_records = self.get_atgc_from_parsed()
-        at_content = round(sum(atgc[0] for taxon, atgc in atgc_records) \
-         / self.get_taxa_no(), 3)
+        at_content = round(sum(atgc[0] for taxon, atgc in atgc_records) / self.get_taxa_no(), 3)
         gc_content = round(1 - float(at_content), 3)
 
         atgc_content = [str(at_content), str(gc_content)]
@@ -990,8 +1005,7 @@ class DNAAlignment(Alignment):
     def get_atgc_from_parsed(self):
         # get AT and GC contents from parsed alignment dictionary
         # return a list of tuples with taxon name, AT content, and GC content
-        return sorted([(taxon, self.get_atgc_from_seq(seq)) \
-         for taxon, seq in self.parsed_aln.items()])
+        return sorted([(taxon, self.get_atgc_from_seq(seq)) for taxon, seq in self.parsed_aln.items()])
 
     def get_atgc_from_seq(self, seq):
         # get AT and GC contents from individual sequences
@@ -1371,15 +1385,19 @@ class MetaAlignment():
             add_to_parsed_alignments(parsed)
             # checking if every seq has the same length or if parsed is not empty; exit if false
             if self.check_align == True:
-                equal = all(x == [len(list(parsed.values())[i]) for i in range(0,len(list(parsed.values())))][0]
-                 for x in [len(list(parsed.values())[i]) for i in range(0,len(list(parsed.values())))])
+                equal = all(
+                    x == [len(list(parsed.values())[i]) for i in range(0,len(list(parsed.values())))][0]
+                    for x in [len(list(parsed.values())[i]) for i in range(0,len(list(parsed.values())))]
+                )
                 if equal is False:
                     print("ERROR: Sequences in input are of varying lengths. Be sure to align them first.")
                     sys.exit()
 
             if not parsed.keys() or not any(parsed.values()):
-                print("ERROR: Parsed sequences of " + alignment.in_file + " are empty. "\
-                 "Are you sure you specified the right input format and/or that input is a valid alignment?")
+                print(
+                    "ERROR: Parsed sequences of " + alignment.in_file + " are empty. "
+                    "Are you sure you specified the right input format and/or that input is a valid alignment?"
+                )
                 sys.exit()
 
         return parsed_alignments
@@ -1620,7 +1638,10 @@ class MetaAlignment():
         aln_name = self.get_alignment_name_no_ext(index)
         for taxon in species_to_remove:
             if taxon not in alignment.keys():
-                print("WARNING: Taxon '" + taxon + "' not found in '" + aln_name + "'.\nIf you expected it to be there, make sure to replace all taxon name spaces with underscores and that you are not using quotes.")
+                print(
+                    "WARNING: Taxon '" + taxon + "' not found in '" + aln_name + "'.\nIf you expected it to be there, "
+                    "make sure to replace all taxon name spaces with underscores and that you are not using quotes."
+                )
 
             new_alignment = {species: seq for species, seq in alignment.items() if species not in species_to_remove}
 
@@ -1716,9 +1737,10 @@ class MetaAlignment():
         pad_longest_name = len(max(taxa_list, key=len)) + 3
         seq_length = len(next(iter(source_dict.values())))
         header = str(len(source_dict)) + " " + str(seq_length)
-        nexus_string = "#NEXUS\n\nBEGIN DATA;\n\tDIMENSIONS  NTAX=" + str(no_taxa) +\
-         " NCHAR=" + str(seq_length) + ";\n\tFORMAT DATATYPE=" + data_type +\
-          "  GAP = - MISSING = ?;\n\tMATRIX\n"
+        nexus_string = (
+            "#NEXUS\n\nBEGIN DATA;\n\tDIMENSIONS  NTAX=" + str(no_taxa) + " NCHAR=" + str(seq_length)
+            + ";\n\tFORMAT DATATYPE=" + data_type + "  GAP = - MISSING = ?;\n\tMATRIX\n"
+        )
 
         for taxon, seq in sorted(source_dict.items()):
             taxon = taxon.replace(" ","_").strip("'")
@@ -1743,9 +1765,10 @@ class MetaAlignment():
         # this will be a list of tuples to hold taxa names and sequences
         seq_matrix = []
 
-        nexus_int_string = "#NEXUS\n\nBEGIN DATA;\n\tDIMENSIONS  NTAX=" +\
-         str(no_taxa) + " NCHAR=" + str(seq_length) + ";\n\tFORMAT   INTERLEAVE" +\
-          "   DATATYPE=" + data_type + "  GAP = - MISSING = ?;\n\tMATRIX\n"
+        nexus_int_string = (
+            "#NEXUS\n\nBEGIN DATA;\n\tDIMENSIONS  NTAX=" + str(no_taxa) + " NCHAR=" + str(seq_length)
+            + ";\n\tFORMAT   INTERLEAVE" + "   DATATYPE=" + data_type + "  GAP = - MISSING = ?;\n\tMATRIX\n"
+        )
 
         n = 500
 
@@ -1987,16 +2010,19 @@ class MetaAlignment():
 
         elif action == "convert":
             length = len(self.alignment_objects)
-            [self.write_convert(i, alignment, file_format, extension) \
-             for i, alignment in enumerate(self.parsed_alignments)]
+            [
+                self.write_convert(i, alignment, file_format, extension)
+                for i, alignment in enumerate(self.parsed_alignments)
+            ]
             print("Converted " + str(length) + " files from " + self.in_format + " to " + file_format)
 
         elif action == "replicate":
-            [self.write_replicate(i, alignment, file_format, extension) \
-             for i, alignment in enumerate(self.get_replicate(self.no_replicates, self.no_loci))]
+            [
+                self.write_replicate(i, alignment, file_format, extension)
+                for i, alignment in enumerate(self.get_replicate(self.no_replicates, self.no_loci))
+            ]
 
-            print("Constructed " + str(self.no_replicates) + " replicate data sets, each from " \
-             + str(self.no_loci) + " alignments")
+            print("Constructed " + str(self.no_replicates) + " replicate data sets, each from " + str(self.no_loci) + " alignments")
 
         elif action == "split":
             list_of_alignments = self.get_partitioned(self.split)
@@ -2021,15 +2047,19 @@ class MetaAlignment():
                 sys.exit()
             translated_alignment_dicts = self.get_translated(self.genetic_code, self.reading_frame)
             length = len(self.alignment_objects)
-            [self.write_translated(i, alignment, file_format, extension) \
-             for i, alignment in enumerate(translated_alignment_dicts)]
+            [
+                self.write_translated(i, alignment, file_format, extension)
+                for i, alignment in enumerate(translated_alignment_dicts)
+            ]
             print("Translated " + str(length) + " files to amino acid sequences")
 
         elif action == "trim": # self.trim_fraction, self.parsimony_check
             trimmed_alignment_dicts = self.get_trimmed(self.trim_fraction, self.parsimony_check)
             length = len(self.alignment_objects)
-            [self.write_trimmed(i, alignment, file_format, extension) \
-             for i, alignment in enumerate(trimmed_alignment_dicts)]
+            [
+                self.write_trimmed(i, alignment, file_format, extension)
+                for i, alignment in enumerate(trimmed_alignment_dicts)
+            ]
             print("Trimmed", str(length), "file(s) to have", self.trim_fraction, "minimum occupancy per alignment column")
 
 
