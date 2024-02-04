@@ -1859,7 +1859,7 @@ class MetaAlignment:
         part_list = self.natural_sort(part_dict.keys())
         # write beginning of nexus sets
         part_string += "#NEXUS\n\n"
-        part_string += "Begin sets;\n"
+        part_string += "BEGIN SETS;\n"
         if codons == "none":
             for key in part_list:
                 part_string += "\tcharset " + key + " = " + str(part_dict[key]) + ";\n"
@@ -1874,7 +1874,7 @@ class MetaAlignment:
                 part_string += "\tcharset " + key + "_pos1" + " = " + start + "-" + end + "\\3" + ";\n"
                 part_string += "\tcharset " + key + "_pos2" + " = " + str(int(start) + 1) + "-" + end + "\\3" + ";\n"
                 part_string += "\tcharset " + key + "_pos3" + " = " + str(int(start) + 2) + "-" + end + "\\3" + ";\n"
-        part_string += "End;"
+        part_string += "END;"
         return part_string
 
     def print_raxml_partitions(self, data_type, codons):
