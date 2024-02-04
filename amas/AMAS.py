@@ -1099,13 +1099,13 @@ class MetaAlignment:
 
         # The code list:
         self.codes_list = """
-        1. The Standard Code
-        2. The Vertebrate Mitochondrial Code
-        3. The Yeast Mitochondrial Code
-        4. The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code
-        5. The Invertebrate Mitochondrial Code
-        6. The Ciliate, Dasycladacean and Hexamita Nuclear Code
-        9. The Echinoderm and Flatworm Mitochondrial Code
+         1. The Standard Code
+         2. The Vertebrate Mitochondrial Code
+         3. The Yeast Mitochondrial Code
+         4. The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code
+         5. The Invertebrate Mitochondrial Code
+         6. The Ciliate, Dasycladacean and Hexamita Nuclear Code
+         9. The Echinoderm and Flatworm Mitochondrial Code
         10. The Euplotid Nuclear Code
         11. The Bacterial, Archaeal and Plant Plastid Code
         12. The Alternative Yeast Nuclear Code
