@@ -1554,30 +1554,28 @@ class MetaAlignment:
 
         self.file_overwrite_error(file_name)
 
-        summary_file = open(file_name, "w", encoding="utf-8")
-        summary_out = self.get_summaries()
-        header = '\t'.join(summary_out[0])
-        new_summ = ['\t'.join(summary) for summary in summary_out[1]]
-        summary_file.write(header + '\n')
-        summary_file.write('\n'.join(new_summ))
-        summary_file.write('\n')
-        summary_file.close()
-        print("Wrote summaries to file '" + file_name + "'")
+        with summary_file = open(file_name, "w", encoding="utf-8") as summary_files:
+            summary_out = self.get_summaries()
+            header = '\t'.join(summary_out[0])
+            new_summ = ['\t'.join(summary) for summary in summary_out[1]]
+            summary_file.write(header + '\n')
+            summary_file.write('\n'.join(new_summ))
+            summary_file.write('\n')
+            print("Wrote summaries to file '" + file_name + "'")
 
     def write_taxa_summaries(self):
         # write by-taxon summaries to file
         for index, in_file_name in enumerate(self.in_files):
             out_file_name = in_file_name + "-seq-summary.txt"
             self.file_overwrite_error(out_file_name)
-            summary_file = open(out_file_name, "w", encoding="utf-8")
-            summary_out = self.get_taxon_summaries()
-            header = '\t'.join(summary_out[0])
-            summ = [[str(col) for col in element] for element in summary_out[1][index]]
-            new_summ = ['\t'.join(row) for row in summ]
-            summary_file.write(header + '\n')
-            summary_file.write('\n'.join(new_summ))
-            summary_file.write('\n')
-            summary_file.close()
+            with summary_file = open(out_file_name, "w", encoding="utf-8") as summary_files:
+                summary_out = self.get_taxon_summaries()
+                header = '\t'.join(summary_out[0])
+                summ = [[str(col) for col in element] for element in summary_out[1][index]]
+                new_summ = ['\t'.join(row) for row in summ]
+                summary_file.write(header + '\n')
+                summary_file.write('\n'.join(new_summ))
+                summary_file.write('\n')
 
     def get_replicate(self, no_replicates, no_loci):
         # construct replicate data sets for phylogenetic jackknife
@@ -1900,13 +1898,13 @@ class MetaAlignment:
     def write_partitions(self, file_name, part_format, codons):
         # write partitions file for concatenated alignment
         self.file_overwrite_error(file_name)
-        part_file = open(file_name, "w", encoding="utf-8")
-        if part_format == "nexus":
-            part_file.write(self.print_nexus_partitions(codons))
-        if part_format == "raxml":
-            part_file.write(self.print_raxml_partitions(self.data_type, codons))
-        if part_format == "unspecified":
-            part_file.write(self.print_unspecified_partitions(codons))
+        with open(file_name, "w", encoding="utf-8") as part_file:
+            if part_format == "nexus":
+                part_file.write(self.print_nexus_partitions(codons))
+            if part_format == "raxml":
+                part_file.write(self.print_raxml_partitions(self.data_type, codons))
+            if part_format == "unspecified":
+                part_file.write(self.print_unspecified_partitions(codons))
         print("Wrote partitions for the concatenated file to '" + file_name + "'")
 
     def get_extension(self, file_format):
@@ -1931,18 +1929,17 @@ class MetaAlignment:
 
     def write_formatted_file(self, file_format, file_name, alignment):
         # write the correct format string into a file
-        out_file = open(file_name, "w", encoding="utf-8")
-        if file_format == "phylip":
-            out_file.write(self.print_phylip(alignment))
-        elif file_format == "fasta":
-            out_file.write(self.print_fasta(alignment))
-        elif file_format == "phylip-int":
-            out_file.write(self.print_phylip_int(alignment))
-        elif file_format == "nexus":
-            out_file.write(self.print_nexus(alignment))
-        elif file_format == "nexus-int":
-            out_file.write(self.print_nexus_int(alignment))
-        out_file.close()
+        with open(file_name, "w", encoding="utf-8") as out_file:
+            if file_format == "phylip":
+                out_file.write(self.print_phylip(alignment))
+            elif file_format == "fasta":
+                out_file.write(self.print_fasta(alignment))
+            elif file_format == "phylip-int":
+                out_file.write(self.print_phylip_int(alignment))
+            elif file_format == "nexus":
+                out_file.write(self.print_nexus(alignment))
+            elif file_format == "nexus-int":
+                out_file.write(self.print_nexus_int(alignment))
 
     def get_alignment_name(self, i, extension):
         # get file name
