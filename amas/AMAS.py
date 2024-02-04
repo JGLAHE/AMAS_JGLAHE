@@ -128,8 +128,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
         )
 
     def trim(self):
-        # convert command
-
+        # trim command
         parser = argparse.ArgumentParser(
             description="Trim alignment by occupancy. Optionally removes sites that are not parsimony informative. \n CAUTION: when running on amino acids stop codons marked with * will be treated as missing data!",
         )
