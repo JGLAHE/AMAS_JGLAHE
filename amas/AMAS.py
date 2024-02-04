@@ -444,8 +444,8 @@ class FileParser:
         records = {}
 
         for match in matches:
-            name_match = match.group(1).replace("\n","")
-            seq_match = match.group(2).replace("\n","").upper()
+            name_match = match.group(1).replace("\n", "")
+            seq_match = match.group(2).replace("\n", "").upper()
             seq_match = self.translate_ambiguous(seq_match)
             records[name_match] = seq_match
 
@@ -497,11 +497,11 @@ class FileParser:
         counter = 0
 
         for match in name_matches:
-            name_match = match.group(2).replace("\n","")
+            name_match = match.group(2).replace("\n", "")
             taxa.append(name_match)
 
         for match in seq_matches:
-            seq_match = match.group(3).replace("\n","").upper()
+            seq_match = match.group(3).replace("\n", "").upper()
             seq_match = self.translate_ambiguous(seq_match)
             sequences.append(seq_match)
         # try parsing PHYLUCE-style interleaved phylip
@@ -515,11 +515,11 @@ class FileParser:
 
             for match in matches:
                 try:
-                    name_match = match.group(3).replace("\n","")
+                    name_match = match.group(3).replace("\n", "")
                     taxa.append(name_match)
                 except AttributeError:
                     pass
-                seq_match = match.group(5).replace("\n","").upper()
+                seq_match = match.group(5).replace("\n", "").upper()
                 seq_match = "".join(seq_match.split())
                 seq_match = self.translate_ambiguous(seq_match)
                 sequences.append(seq_match)
@@ -553,8 +553,8 @@ class FileParser:
             )
 
             for match in seq_matches:
-                name_match = match.group(2).replace("\n","")
-                seq_match = match.group(3).replace("\n","").upper()
+                name_match = match.group(2).replace("\n", "")
+                seq_match = match.group(3).replace("\n", "").upper()
                 seq_match = self.translate_ambiguous(seq_match)
                 records[name_match] = seq_match
 
@@ -596,7 +596,7 @@ class FileParser:
         for taxon_no in range(len(taxa)):
 
             full_length_sequence = "".join([sequences[index] for index in range(counter,len(sequences),len(taxa))])
-            records[taxa[taxon_no]] = self.translate_ambiguous(full_length_sequence).replace("\n","").upper()
+            records[taxa[taxon_no]] = self.translate_ambiguous(full_length_sequence).replace("\n", "").upper()
             counter += 1
 
         return records
@@ -747,7 +747,7 @@ class Alignment:
         name = self.get_name()
         names = (name for i in range(taxa_no))
         taxa_names = (
-            taxon.replace(" ","_").replace(".","_").replace("'","")
+            taxon.replace(" ", "_").replace(".", "_").replace("'", "")
             for taxon, missing_count, missing_percent in self.missing_records
         )
         missing = (missing_count for taxon, missing_count, missing_percent in self.missing_records)
@@ -968,10 +968,10 @@ class AminoAcidAlignment(Alignment):
 class DNAAlignment(Alignment):
     """Alphabets specific to DNA alignments"""
 
-    alphabet = ["A", "C", "G", "T", "K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X", "N",  "O",  "-", "?"]
-    missing_ambiguous_chars = ["K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X", "N",  "O",  "-", "?"]
+    alphabet = ["A", "C", "G", "T", "K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X", "N", "O", "-", "?"]
+    missing_ambiguous_chars = ["K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X", "N", "O", "-", "?"]
     missing_chars = ["X", "N", "O", "-", "?"]
-    non_alphabet = ["E",  "F",  "I",  "L",  "P",  "Q",  "J",  "Z",  ".",  "*"]
+    non_alphabet = ["E", "F", "I", "L", "P", "Q", "J", "Z", ".", "*"]
 
     def get_summary(self):
         # get alignment summarry specific to nucleotide
@@ -1743,7 +1743,7 @@ class MetaAlignment():
         )
 
         for taxon, seq in sorted(source_dict.items()):
-            taxon = taxon.replace(" ","_").strip("'")
+            taxon = taxon.replace(" ", "_").strip("'")
             nexus_string += "\t" + taxon.ljust(pad_longest_name, ' ') + seq + "\n"
         nexus_string += "\n;\n\nEND;"
 
