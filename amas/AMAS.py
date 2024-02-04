@@ -132,7 +132,9 @@ Use AMAS <command> -h for help with arguments of the command of interest
     def trim(self):
         # trim command
         parser = argparse.ArgumentParser(
-            description="Trim alignment by occupancy. Optionally removes sites that are not parsimony informative. \n CAUTION: when running on amino acids stop codons marked with * will be treated as missing data!",
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''Trim alignment by occupancy. Optionally removes sites that are not parsimony informative.'''
+            '''\nCAUTION: when running on amino acids stop codons marked with * will be treated as missing data!'''
         )
         parser.add_argument(
             "-u",
@@ -323,6 +325,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
     def translate(self):
         # translate command
         parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawTextHelpFormatter,
             description="Translate a protein-coding DNA alignment into amino acids",
         )
         parser.add_argument(
@@ -332,14 +335,28 @@ Use AMAS <command> -h for help with arguments of the command of interest
             dest = "genetic_code",
             choices = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 16, 21, 22, 23, 24, 25, 26],
             default = 1,
-            help = "NCBI genetic code to use: 1. The Standard Code, 2. The Vertebrate Mitochondrial Code, \
-3. The Yeast Mitochondrial Code, 4. The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code, \
-5. The Invertebrate Mitochondrial Code, 6. The Ciliate, Dasycladacean and Hexamita Nuclear Code, \
-9. The Echinoderm and Flatworm Mitochondrial Code, 10. The Euplotid Nuclear Code, 11. The Bacterial, Archaeal and Plant Plastid Code, \
-12. The Alternative Yeast Nuclear Code, 13. The Ascidian Mitochondrial Code, 14. The Alternative Flatworm Mitochondrial Code, \
-16. Chlorophycean Mitochondrial Code, 21. Trematode Mitochondrial Code, 22. Scenedesmus obliquus Mitochondrial Code, \
-23. Thraustochytrium Mitochondrial Code, 24. Pterobranchia Mitochondrial Code, 25. Candidate Division SR1 and Gracilibacteria Code, \
-26. Pachysolen tannophilus Nuclear Code. Default: 1."
+            help = '''\nNCBI genetic code to use (Default: 1):'''
+'''
+   1. The Standard Code
+   2. The Vertebrate Mitochondrial Code
+   3. The Yeast Mitochondrial Code
+   4. The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code
+   5. The Invertebrate Mitochondrial Code
+   6. The Ciliate, Dasycladacean and Hexamita Nuclear Code
+   9. The Echinoderm and Flatworm Mitochondrial Code
+  10. The Euplotid Nuclear Code
+  11. The Bacterial, Archaeal and Plant Plastid Code
+  12. The Alternative Yeast Nuclear Code
+  13. The Ascidian Mitochondrial Code
+  14. The Alternative Flatworm Mitochondrial Code
+  16. Chlorophycean Mitochondrial Code
+  21. Trematode Mitochondrial Code
+  22. Scenedesmus obliquus Mitochondrial Code
+  23. Thraustochytrium Mitochondrial Code
+  24. Pterobranchia Mitochondrial Code
+  25. Candidate Division SR1 and Gracilibacteria Code
+  26. Pachysolen tannophilus Nuclear Code\n
+'''
         )
         parser.add_argument(
             "-k",
