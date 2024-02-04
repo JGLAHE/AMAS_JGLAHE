@@ -1394,7 +1394,9 @@ class MetaAlignment:
         return parsed_partitions
 
     def get_alignment_object(self, alignment):
-        # parse according to the given alphabet
+        # parse according to the given alphabet;
+        # Note:(`alignment`) <=> `in_file` outside MetaAlignment, e.g.
+        # AminoAcidAlignment(Alignment<-.get_parsed_aln<-.get_aln_input)<-FileParser.__init__.in_file<-FileHandler(...open(self.file_name...)
         if self.data_type == "aa":
             aln = AminoAcidAlignment(alignment, self.in_format, self.data_type)
         elif self.data_type == "dna":
