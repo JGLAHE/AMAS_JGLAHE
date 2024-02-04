@@ -92,7 +92,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
             help = "Check if input sequences are aligned. Default: no check"
         )
         parser.add_argument(
-        # parallelization is used for file parsing and calculating summary stats
+            # parallelization is used for file parsing and calculating summary stats
             "-c",
             "--cores",
             dest = "cores",
@@ -398,7 +398,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
 
 
     def get_args_dict(self):
-    # store arguments in a dictionary
+        # store arguments in a dictionary
         command = self.args.__dict__
         arguments = getattr(self, self.args.command)().__dict__
         argument_dictionary = command.copy()
@@ -548,9 +548,9 @@ class FileParser:
         for match in matches:
             matrix_match = match.group(3)
             seq_matches = re.finditer(
-                 r"^(\s+)?[']?(\S+\s\S+|\S+)[']?\s+([A-Za-z*?.{}-]+)($|\s+\[[0-9]+\]$)",
-                 matrix_match, re.MULTILINE
-             )
+                r"^(\s+)?[']?(\S+\s\S+|\S+)[']?\s+([A-Za-z*?.{}-]+)($|\s+\[[0-9]+\]$)",
+                matrix_match, re.MULTILINE
+            )
 
             for match in seq_matches:
                 name_match = match.group(2).replace("\n","")
@@ -561,8 +561,8 @@ class FileParser:
         return records
 
     def nexus_interleaved_parse(self):
-    # use regex to parse names and sequences in sequential nexus files
-    # find the matrix block
+        # use regex to parse names and sequences in sequential nexus files
+        # find the matrix block
         matches = re.finditer(
             r"(\s+)?(MATRIX\n|matrix\n|MATRIX\r\n|matrix\r\n)(.*?;)",
             self.in_file_lines, re.DOTALL
@@ -785,12 +785,12 @@ class Alignment:
 
     def all_same(self, site):
         # check if all elements of a site are the same
-         return not site or site.count(site[0]) == len(site)
+        return not site or site.count(site[0]) == len(site)
 
     def get_sites_no_missing_ambiguous(self):
         # get each site without missing or ambiguous characters
-         no_missing_ambiguous_sites = [self.get_site_no_missing_ambiguous(column) for column in range(self.get_alignment_length())]
-         return no_missing_ambiguous_sites
+        no_missing_ambiguous_sites = [self.get_site_no_missing_ambiguous(column) for column in range(self.get_alignment_length())]
+        return no_missing_ambiguous_sites
 
     def get_site_no_missing_ambiguous(self, column):
         site = self.get_column(column)
@@ -1267,7 +1267,7 @@ class MetaAlignment():
         }
 
     def translate_dna_to_aa(self, seq, translation_table, frame):
-    # translate DNA string into amino acids
+        # translate DNA string into amino acids
         # where the last codon starts
         last_codon_start = len(seq) - 2
         # where the first codon starts
@@ -1405,11 +1405,11 @@ class MetaAlignment():
                         new_dict[taxon] = new_seq
 
             if self.remove_empty:
-            # check if remove empty sequences
+                # check if remove empty sequences
                 no_empty_dict = self.remove_empty_sequences(new_dict)
                 add_to_list_of_parts({name : no_empty_dict})
             else:
-            # add partition name : dict of taxa and sequences to the list
+                # add partition name : dict of taxa and sequences to the list
                 add_to_list_of_parts({name : new_dict})
 
         return list_of_parts
@@ -2072,4 +2072,4 @@ def run():
 
 if __name__ == '__main__':
 
-        main()
+    main()
