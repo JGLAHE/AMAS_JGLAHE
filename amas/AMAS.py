@@ -42,7 +42,7 @@ def proportion(x):
     # needed to prevent input of invalid floats in trim mode
     x = float(x)
     if x < 0.0 or x > 1.0:
-        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]"%(x,))
+        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]" % (x,))
     return x
 
 class ParsedArgs:
@@ -461,8 +461,8 @@ class FileParser:
         records = {}
 
         for match in matches:
-            name_match = match.group(2).replace("\n","")
-            seq_match = match.group(3).replace("\n","").upper()
+            name_match = match.group(2).replace("\n", "")
+            seq_match = match.group(3).replace("\n", "").upper()
             seq_match = self.translate_ambiguous(seq_match)
             records[name_match] = seq_match
 
@@ -605,18 +605,18 @@ class FileParser:
         # translate ambiguous characters from curly bracket format
         # to single letter format
         # also remove spaces from sequences
-        seq = seq.replace("{GT}","K")
-        seq = seq.replace("{AC}","M")
-        seq = seq.replace("{AG}","R")
-        seq = seq.replace("{CT}","Y")
-        seq = seq.replace("{CG}","S")
-        seq = seq.replace("{AT}","W")
-        seq = seq.replace("{CGT}","B")
-        seq = seq.replace("{ACG}","V")
-        seq = seq.replace("{ACT}","H")
-        seq = seq.replace("{AGT}","D")
-        seq = seq.replace("{GATC}","N")
-        seq = seq.replace(" ","")
+        seq = seq.replace("{GT}", "K")
+        seq = seq.replace("{AC}", "M")
+        seq = seq.replace("{AG}", "R")
+        seq = seq.replace("{CT}", "Y")
+        seq = seq.replace("{CG}", "S")
+        seq = seq.replace("{AT}", "W")
+        seq = seq.replace("{CGT}", "B")
+        seq = seq.replace("{ACG}", "V")
+        seq = seq.replace("{ACT}", "H")
+        seq = seq.replace("{AGT}", "D")
+        seq = seq.replace("{GATC}", "N")
+        seq = seq.replace(" ", "")
 
         return seq
 
@@ -926,10 +926,10 @@ class Alignment:
 class AminoAcidAlignment(Alignment):
     """Alphabets specific to amino acid alignments"""
 
-    alphabet = ["A","C","D","E","F","G","H","I","K","L","M","N","P","Q","R", \
-     "S","T","V","W","Y","B","J","Z","X",".","*","-","?"]
-    missing_ambiguous_chars = ["B","J","Z","X",".","*","-","?"]
-    missing_chars = ["X",".","*","-","?"]
+    alphabet = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", \
+     "S", "T", "V", "W", "Y", "B", "J", "Z", "X", ".", "*", "-", "?"]
+    missing_ambiguous_chars = ["B", "J", "Z", "X", ".", "*", "-", "?"]
+    missing_chars = ["X", ".", "*", "-", "?"]
     non_alphabet = ["O"]
 
     def get_summary(self):
@@ -949,12 +949,12 @@ class AminoAcidAlignment(Alignment):
 class DNAAlignment(Alignment):
     """Alphabets specific to DNA alignments"""
 
-    alphabet = ["A","C","G","T","K","M","R","Y","S","W","B","V","H","D","X", \
-     "N", "O", "-","?"]
-    missing_ambiguous_chars = ["K","M","R","Y","S","W","B","V","H","D","X", \
-     "N", "O", "-","?"]
-    missing_chars = ["X","N","O","-","?"]
-    non_alphabet = ["E", "F", "I", "L", "P", "Q", "J", "Z", ".", "*"]
+    alphabet = ["A", "C", "G", "T", "K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X",  \
+     "N",  "O",  "-", "?"]
+    missing_ambiguous_chars = ["K", "M", "R", "Y", "S", "W", "B", "V", "H", "D", "X",  \
+     "N",  "O",  "-", "?"]
+    missing_chars = ["X", "N", "O", "-", "?"]
+    non_alphabet = ["E",  "F",  "I",  "L",  "P",  "Q",  "J",  "Z",  ".",  "*"]
 
     def get_summary(self):
         # get alignment summarry specific to nucleotide
@@ -1327,7 +1327,7 @@ class MetaAlignment():
 
     def remove_unknown_chars(self, seq):
         # remove unknown characters from sequence
-        new_seq = seq.replace("?","").replace("-","")
+        new_seq = seq.replace("?", "").replace("-", "")
 
         return new_seq
 
@@ -1650,7 +1650,7 @@ class MetaAlignment():
             # split dictionary values to a list of string, each n chars long
             seq = [seq[i:i+n] for i in range(0, len(seq), n)]
             # in case there are unwanted spaces in taxon names
-            taxon = taxon.replace(" ","_").strip("'")
+            taxon = taxon.replace(" ", "_").strip("'")
             fasta_string += ">" + taxon + "\n"
             for element in seq:
                 fasta_string += element + "\n"
@@ -1668,7 +1668,7 @@ class MetaAlignment():
         header = str(len(source_dict)) + " " + str(seq_length)
         phylip_string = header + "\n"
         for taxon, seq in sorted(source_dict.items()):
-            taxon = taxon.replace(" ","_").strip("'")
+            taxon = taxon.replace(" ", "_").strip("'")
             # left-justify taxon names relative to sequences
             phylip_string += taxon.ljust(pad_longest_name, ' ') + seq + "\n"
 
@@ -1951,7 +1951,7 @@ class MetaAlignment():
 
     def write_reduced(self, file_format, extension):
         # write alignment with taxa removed into a file
-        prefix =  self.reduced_file_prefix
+        prefix = self.reduced_file_prefix
         alns = self.remove_taxa(self.species_to_remove)
         for file_name, aln_dict in alns.items():
             out_file_name = prefix + file_name + extension
