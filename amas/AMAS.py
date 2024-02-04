@@ -1573,7 +1573,7 @@ class MetaAlignment:
 
         self.file_overwrite_error(file_name)
 
-        with summary_file = open(file_name, "w", encoding="utf-8") as summary_files:
+        with open(file_name, "w", encoding="utf-8") as summary_file:
             summary_out = self.get_summaries()
             header = '\t'.join(summary_out[0])
             new_summ = ['\t'.join(summary) for summary in summary_out[1]]
@@ -1587,7 +1587,7 @@ class MetaAlignment:
         for index, in_file_name in enumerate(self.in_files):
             out_file_name = in_file_name + "-seq-summary.txt"
             self.file_overwrite_error(out_file_name)
-            with summary_file = open(out_file_name, "w", encoding="utf-8") as summary_files:
+            with open(out_file_name, "w", encoding="utf-8") as summary_file:
                 summary_out = self.get_taxon_summaries()
                 header = '\t'.join(summary_out[0])
                 summ = [[str(col) for col in element] for element in summary_out[1][index]]
