@@ -691,6 +691,14 @@ class FileParser:
                     pos_dict["stop"] = int(position)
 
                 if "\\" in position:
+                    # Note: the value of `N` in `...\N` isn't read: the script simply assumes `N` is consistent with the number of
+                    # increments per interval when the alignment is parsed with a stride of 3 (designating each cpos).
+                    # E.g. For the partition file:
+                    #       ...`1-N\2`
+                    #       ...`2-N\2`
+                    #       ...`(N+1)-M\2`
+                    #       ...`(N+2)-M\2`
+                    # 3'cpos are ignored due to the absence of intervals `3-N...`, `(N+3)-M...`, not because the associated stride values are`\2`
                     pos_dict["stride"] = 3
                 elif "\\" not in position:
                     pos_dict["stride"] = 1
@@ -1396,7 +1404,7 @@ class MetaAlignment:
     def get_alignment_object(self, alignment):
         # parse according to the given alphabet;
         # Note:(`alignment`) <=> `in_file` outside MetaAlignment, e.g.
-        # AminoAcidAlignment(Alignment<-.get_parsed_aln<-.get_aln_input)<-FileParser.__init__.in_file<-FileHandler(...open(self.file_name...)
+        # AminoAcidAlignment(Alignment<-.get_parsed_aln<-.get_aln_input)<-FileParser.__init__(in_file)<-FileHandler(...open(self.file_name...)
         if self.data_type == "aa":
             aln = AminoAcidAlignment(alignment, self.in_format, self.data_type)
         elif self.data_type == "dna":
