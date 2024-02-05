@@ -322,6 +322,88 @@ Use AMAS <command> -h for help with arguments of the command of interest
         args = parser.parse_args(sys.argv[2:])
         return args
 
+    def metapartitions(self):
+        # metapartitions command
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawTextHelpFormatter,
+            description='''Split alignment according to a partition file, then concatenate the output.'''
+            '''\n\nUse case:\n'''
+            '''    Not all bionformatics utilities can parse partition definitions with codon-position strides and/or discontinuous ranges.\n'''
+            '''    In such cases, a superalignment associated with this type of partitioning can be `split` into individual metapartition alignments,\n'''
+            '''    which can then by combined with `concat` into a new superalignment of contiguous (meta)partitions effectively equivalent to the\n'''
+            '''    original (when analysed according to its corresponding partition file). `metapartitions` command combines both steps into one command.\n'''
+        )
+        parser.add_argument(
+            "-p",
+            "--concat-part",
+            dest = "concat_part",
+            default = "metapartitions.txt",
+            help = "Partition file(name) for the final concatenated alignment of metapartitions. Default: 'metapartitions.txt'"
+        )
+        parser.add_argument(
+            "-t",
+            "--concat-out",
+            dest = "concat_out",
+            default = "concatenated-meta.out",
+            help = "File name for the concatenated alignment of metapartitions. Default: 'concatenated-meta.out'"
+        )
+        parser.add_argument(
+            "-u",
+            "--out-format",
+            dest = "out_format",
+            choices = ["fasta", "phylip", "nexus", "phylip-int", "nexus-int"],
+            default = "fasta",
+            help = "File format for the output alignments (split and concatenated). Default: fasta"
+        )
+        parser.add_argument(
+            "-y",
+            "--part-format",
+            dest = "part_format",
+            choices = ["nexus", "raxml", "unspecified"],
+            default = "unspecified",
+            help = "Partitions file format for the final concatenated alignment of metapartitions. Default: 'unspecified'"
+        )
+        parser.add_argument(
+            "-l",
+            "--split-by",
+            dest = "split_by",
+            help = "Partition file(name) to be used for splitting the initial concatenated alignment.",
+            required = True
+        )
+        parser.add_argument(
+            "-j",
+            "--remove-empty",
+            dest = "remove_empty",
+            action = "store_true",
+            default = False,
+            help = "Remove taxa with sequences composed of only undetermined characters? Default: Don't remove"
+        )
+        parser.add_argument(
+            "-q",
+            "--aln-label",
+            dest = "aln_label",
+            default = None,
+            help = '''Prefix string to the partition counter when printing alignment names to partition file, e.g.'''
+            '''\n                       -q|--aln-label <string>:  <string>_p001_Alignment_name = 1-1200 ...'''
+            '''\n                                Default (None):           p001_Alignment_name = 1-1200 ...'''
+            '''\n -z|--short-aln-name + -q|--aln-label <string>:  <string>_p001 = 1-1200 ...'''
+        )
+        parser.add_argument(
+            "-z",
+            "--short-aln-name",
+            dest = "short_aln_name",
+            action = "store_true",
+            default = False,
+            help = '''Omits the original alignment names when printing partition file, e.g.'''
+            '''\n                           -z|--short-aln-name:           p001 = 1-1200 ...'''
+            '''\n                               Default (False):           p001_Alignment_name = 1-1200 ...'''
+            '''\n -q|--aln-label <string> + -z|--short-aln-name:  <string>_p001 = 1-1200 ...'''
+        )
+        # add shared arguments
+        self.add_common_args(parser)
+        args = parser.parse_args(sys.argv[2:])
+        return args
+
     def translate(self):
         # translate command
         parser = argparse.ArgumentParser(
