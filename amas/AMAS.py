@@ -725,8 +725,8 @@ class FileParser:
 
     def partitions_parse(self):
         # parse partitions file using regex
-        #matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)
-        # more permissive: handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files
+        # original: `matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)`
+        # new version: more permissive -> handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files
         matches = re.finditer(
             r"""^[ \t]*                           # start of line w/ zero-or-more (just) whitespaces/tabs
                 (
