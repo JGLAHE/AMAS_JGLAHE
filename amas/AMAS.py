@@ -1549,13 +1549,13 @@ class MetaAlignment:
                         new_seq = new_seq + seq[dictionary["start"]:dictionary["stop"]:dictionary["stride"]]
                         new_dict[taxon] = new_seq
 
-            if self.remove_empty:
-                # check if remove empty sequences
-                no_empty_dict = self.remove_empty_sequences(new_dict)
-                add_to_list_of_parts({name : no_empty_dict})
-            else:
-                # add partition name : dict of taxa and sequences to the list
-                add_to_list_of_parts({name : new_dict})
+                if self.remove_empty:
+                    # check if remove empty sequences
+                    no_empty_dict = self.remove_empty_sequences(new_dict)
+                    add_to_list_of_parts({name : no_empty_dict})
+                else:
+                    # add partition name : dict of taxa and sequences to the list
+                    add_to_list_of_parts({name : new_dict})
 
         return list_of_parts
 
