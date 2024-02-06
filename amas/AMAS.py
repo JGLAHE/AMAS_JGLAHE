@@ -798,7 +798,10 @@ class FileParser:
 
 
 class Alignment:
-    """Gets in parsed sequences as input and summarizes their stats"""
+    """Base class: Gets in parsed sequences as input and summarizes their stats.
+    Based on the data type, the subclasses AminoAcidAlignment & DNAAlignment define the attributes:
+    `alphabet`, `missing_ambiguous_chars`, `missing_chars`, `non_alphabet`
+    """
 
     def __init__(self, in_file, in_format, data_type):
         # initialize alignment class with parsed records and alignment name as arguments,
