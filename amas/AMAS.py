@@ -327,11 +327,13 @@ Use AMAS <command> -h for help with arguments of the command of interest
         parser = argparse.ArgumentParser(
             formatter_class=argparse.RawTextHelpFormatter,
             description='''Split alignment according to a partition file, then concatenate the output.'''
-            '''\n\nUse case:\n'''
-            '''    Not all bionformatics utilities can parse partition definitions with codon-position strides and/or discontinuous ranges.\n'''
-            '''    In such cases, a superalignment associated with this type of partitioning can be `split` into individual metapartition alignments,\n'''
-            '''    which can then by combined with `concat` into a new superalignment of contiguous (meta)partitions effectively equivalent to the\n'''
-            '''    original (when analysed according to its corresponding partition file). `metapartitions` command combines both steps into one command.\n'''
+            '''\n\nuse case:\n'''
+            '''    Some utilities cannot parse partition definitions containing strides (\) and/or discontinuous ranges.\n'''
+            '''    In such case, running `split` + `concat` in separate passes can convert a corresponding (super)alignment it into an\n'''
+            '''    equivalent compatible form with contiguous (meta)partitions; this may also require renaming metapartiton alignments\n'''
+            '''    and partition file entries in order to remove tags applied by each respective operation.\n\n'''
+            '''    `metapartitions` combines these steps into one command, with the options `-q|--aln-label` and `-z|--short-aln-name`\n'''
+            '''     providing additional control over the collated (meta)partition names (see their respective help entries).\n\n'''
         )
         parser.add_argument(
             "-p",
