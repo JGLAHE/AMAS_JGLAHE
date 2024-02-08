@@ -827,7 +827,7 @@ class Alignment:
         self.parsed_aln = self.get_parsed_aln()
 
     def __str__(self):
-        #  purpose of this override(?); original version returned the method object
+        #  purpose of override? (originally returned method object)
         return self.get_name()
 
     def get_aln_input(self):
@@ -2351,5 +2351,4 @@ def run():
     return config_dict
 
 if __name__ == '__main__':
-
     main()
