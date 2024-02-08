@@ -319,6 +319,13 @@ Use AMAS <command> -h for help with arguments of the command of interest
             default = "fasta",
             help = "File format for the output alignment. Default: fasta"
         )
+        parser.add_argument(
+            "--no-san",
+            dest = "no_sup_aln_name",
+            action = "store_true",
+            default = False,
+            help = '''Don't prepend the input (super)alignment filename to the partition-alignment filenames output by `split`'''
+        )
         # add shared arguments
         self.add_common_args(parser)
         args = parser.parse_args(sys.argv[2:])
@@ -334,7 +341,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
             '''    In such case, running `split` + `concat` in separate passes can convert a corresponding (super)alignment it into an\n'''
             '''    equivalent compatible form with contiguous (meta)partitions; this may also require renaming metapartiton alignments\n'''
             '''    and partition file entries in order to remove tags applied by each respective operation.\n\n'''
-            '''    `metapartitions` combines these steps into one command, with the options `-q|--aln-label` and `-z|--short-aln-name`\n'''
+            '''    `metapartitions` combines these steps into one command, with the options `--prepend` and `--no-mpan`\n'''
             '''    providing additional control over the collated (meta)partition names (see their respective help entries).\n\n'''
         )
         parser.add_argument(
@@ -383,25 +390,30 @@ Use AMAS <command> -h for help with arguments of the command of interest
             help = "Remove taxa with sequences composed of only undetermined characters? Default: Don't remove"
         )
         parser.add_argument(
-            "-q",
-            "--aln-label",
-            dest = "aln_label",
-            default = None,
-            help = '''Prefix string to the partition counter when printing alignment names to partition file, e.g.'''
-            '''\n                       -q|--aln-label <string>:  <string>_p001_Alignment_name = 1-1200 ...'''
-            '''\n                                Default (None):           p001_Alignment_name = 1-1200 ...'''
-            '''\n -z|--short-aln-name + -q|--aln-label <string>:  <string>_p001 = 1-1200 ...'''
-        )
-        parser.add_argument(
-            "-z",
-            "--short-aln-name",
-            dest = "short_aln_name",
+            "--no-san",
+            dest = "no_sup_aln_name",
             action = "store_true",
             default = False,
-            help = '''Omits the original alignment names when printing partition file, e.g.'''
-            '''\n                           -z|--short-aln-name:           p001 = 1-1200 ...'''
-            '''\n                               Default (False):           p001_Alignment_name = 1-1200 ...'''
-            '''\n -q|--aln-label <string> + -z|--short-aln-name:  <string>_p001 = 1-1200 ...'''
+            help = '''Don't prepend the input (super)alignment filename to the (meta)partition-alignment filenames output by `split`'''
+        )
+        parser.add_argument(
+            "--prepend",
+            dest = "prepend_label",
+            default = None,
+            help = '''Prepend <string> to the partition counter in partition file, e.g.'''
+            '''\n            --prepend <string>:  <string>_p001_metapartition_alignment_name = 1-1200 ...'''
+            '''\n                Default (None):           p001_metapartition_alignment_name = 1-1200 ...'''
+            '''\n--no-mpan + --prepend <string>:  <string>_p001 = 1-1200 ...'''
+        )
+        parser.add_argument(
+            "--no-mpan",
+            dest = "no_mpan",
+            action = "store_true",
+            default = False,
+            help = '''Omits (meta)partition alignment names when printing partition file, e.g.'''
+            '''\n                     --no-mpan:          p001 = 1-1200 ...'''
+            '''\n               Default (False):          p001_metapartition_alignment_name = 1-1200 ...'''
+            '''\n--prepend <string> + --no-mpan: <string>_p001 = 1-1200 ...'''
         )
         # add shared arguments
         self.add_common_args(parser)
@@ -1171,7 +1183,8 @@ class MetaAlignment:
         self.check_align = kwargs.get("check_align", False)
         self.cores = kwargs.get("cores")
         self.by_taxon_summary = kwargs.get("by_taxon_summary")
-        self.short_aln_name = False
+        self.no_sup_aln_name = False
+        self.no_mpan = False
 
         if self.command == "replicate":
             self.no_replicates = kwargs.get("replicate_args")[0]
@@ -1180,17 +1193,19 @@ class MetaAlignment:
         if self.command == "split":
             self.split = kwargs.get("split_by")
             self.remove_empty = kwargs.get("remove_empty", False)
+            self.no_sup_aln_name = kwargs.get("no_sup_aln_name", False)
 
         if self.command == "metapartitions":
             self.using_metapartitions = True
             self.split = kwargs.get("split_by")
             self.remove_empty = kwargs.get("remove_empty", False)
-            self.short_aln_name = kwargs.get("short_aln_name", False)
-            self.aln_label = kwargs.get("aln_label")
-            if self.aln_label is not None and isinstance(self.aln_label, str):
-                self.aln_label = self.aln_label + "_"
+            self.no_sup_aln_name = kwargs.get("no_sup_aln_name", False)
+            self.no_mpan = kwargs.get("no_mpan", False)
+            self.prepend_label = kwargs.get("prepend_label")
+            if self.prepend_label is not None and isinstance(self.prepend_label, str):
+                self.prepend_label = self.prepend_label + "_"
             else:
-                self.aln_label = ""
+                self.prepend_label = ""
 
         if self.command == "remove":
             self.species_to_remove = kwargs.get("taxa_to_remove")
@@ -1758,13 +1773,13 @@ class MetaAlignment:
             alignment_name = self.alignment_objects[partition_counter - 1].get_name().split('.')[0]
 
             if self.using_metapartitions:
-                # implementation of option -z|--short-aln-name; -q|--aln-label will be a string or "" (see class definition)
-                if self.short_aln_name:
+                # implementation of option --no-mpan; option --prepend(-label) will assign a string or "" (see class definition)
+                if self.no_mpan:
                     # omit original alignment names from the printed partition file
-                    partition_name = self.aln_label + "p" + str(partition_counter).zfill(digits_to_pad)
+                    partition_name = self.prepend_label + "p" + str(partition_counter).zfill(digits_to_pad)
                 else:
                     # keep original alignment names in the printed partition file
-                    partition_name = self.aln_label + "p" + str(partition_counter).zfill(digits_to_pad) + "_" + alignment_name
+                    partition_name = self.prepend_label + "p" + str(partition_counter).zfill(digits_to_pad) + "_" + alignment_name
             else:
                 partition_name = "p" + str(partition_counter) + "_" + alignment_name
 
