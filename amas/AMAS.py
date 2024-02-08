@@ -330,7 +330,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
             formatter_class=argparse.RawTextHelpFormatter,
             description='''Split alignment according to a partition file, then concatenate the output.'''
             '''\n\nuse case:\n'''
-            '''    Some utilities cannot parse partition definitions containing strides (\) and/or discontinuous ranges.\n'''
+            '''    Some utilities cannot parse partition definitions containing strides (\\) and/or discontinuous ranges.\n'''
             '''    In such case, running `split` + `concat` in separate passes can convert a corresponding (super)alignment it into an\n'''
             '''    equivalent compatible form with contiguous (meta)partitions; this may also require renaming metapartiton alignments\n'''
             '''    and partition file entries in order to remove tags applied by each respective operation.\n\n'''
@@ -2142,18 +2142,29 @@ class MetaAlignment:
         self.file_overwrite_error(file_name)
         self.write_formatted_file(file_format, file_name, alignment)
 
-    def write_split(self, index, item, file_format, extension):
+    def write_split(self, item, file_format, extension):
         # write split alignments from partitions file
         # bad practice with the dicts; figure out better solution
+        partition_name = list(item.keys())[0]
+        alignment = item[partition_name]
+
+        if not alignment:
+            # If the alignment dict is empty, i.e. no alignment associated with partition name, raise error
+            raise ValueError("Partition '%s' is empty. No sequences to write." % partition_name)
+
+        if self.using_metapartitions:
+            file_name = partition_name + extension
+        else:
+            file_name = str(self.in_files[0].split('.')[0]) + "_" + partition_name + extension
+
         try:
-            file_name = str(self.in_files[0].split('.')[0]) + "_" + list(item.keys())[0] + extension
-            alignment = list(item.values())[0]
             self.file_overwrite_error(file_name)
             self.write_formatted_file(file_format, file_name, alignment)
-        except ValueError:
-            print("WARNING: There was no data to write for file '" + file_name + "'. Perhaps a partition composed of missing data only?")
+            yield file_name
+        except ValueError as e:
+            print("There was an issue writing file '%s': %s" % (file_name, str(e)))
             remove(file_name)
-            raise ValueError
+            raise
 
     def write_reduced(self, file_format, extension):
         # write alignment with taxa removed into a file
@@ -2189,21 +2200,23 @@ class MetaAlignment:
         print("write_out elif action == metapartitions")
         metapartition_extension = self.get_metapartition_extension(file_format)
         list_of_alignments = self.get_partitioned(self.split)
-        length = len(list_of_alignments)
+        written_split_files = []
         err_indx = 0
 
-        new_in_files = []
         for item in list_of_alignments:
             try:
-                for new_file_name in self.write_split(item, file_format, metapartition_extension):
-                    new_in_files.append(new_file_name)
-            except ValueError:
-                err_indx += 1
-
-        print("Wrote " + str(length - err_indx) + " " + str(file_format) + " metapartition files from partitions provided")
+                for split_file in self.write_split(item, file_format, metapartition_extension):
+                    written_split_files.append(split_file)
+            except ValueError as e:
+                    print("WARNING: ", e)
+                    err_indx += 1
+        if len(written_split_files) > 0:
+            print("Wrote %d %s metapartition files from partitions provided" % (len(written_split_files), file_format))
+        if err_indx > 0:
+            print("WARNING: %d file(s) raised an error while writing (see above)." % err_indx)
 
         # now set inputs to be the collated metapartition alignment files
-        self.in_files = new_in_files
+        self.in_files = written_split_files
         self.alignment_objects = self.get_alignment_objects()
         self.parsed_alignments = self.get_parsed_alignments()
 
@@ -2235,15 +2248,20 @@ class MetaAlignment:
 
         elif action == "split":
             list_of_alignments = self.get_partitioned(self.split)
-            length = len(list_of_alignments)
+            written_split_files = []
             err_indx = 0
-            for i, item in enumerate(list_of_alignments):
+
+            for item in list_of_alignments:
                 try:
-                    self.write_split(i, item, file_format, extension)
-                except ValueError:
-                    err_indx += 1
-                    pass
-            print("Wrote " + str(length - err_indx) + " " + str(file_format) + " files from partitions provided")
+                    for split_file in self.write_split(item, file_format, extension):
+                        written_split_files.append(split_file)
+                except ValueError as e:
+                        print("WARNING: ", e)
+                        err_indx += 1
+            if len(written_split_files) > 0:
+                print("Wrote %d %s files from partitions provided" % (len(written_split_files), file_format))
+            if err_indx > 0:
+                print("WARNING: %d file(s) raised an error while writing (see above)." % err_indx)
 
         elif action == "metapartitions":
             self.write_metapartitions(file_format)
