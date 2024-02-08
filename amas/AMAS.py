@@ -1776,11 +1776,9 @@ class MetaAlignment:
                     "make sure to replace all taxon name spaces with underscores and that you are not using quotes."
                 )
 
-            new_alignment = {species: seq for species, seq in alignment.items() if species not in species_to_remove_set}
+        new_alignment = {species: seq for species, seq in alignment.items() if species not in species_to_remove_set}
 
-            aln_tuple = (aln_name, new_alignment)
-
-        return aln_tuple
+        return aln_name, new_alignment
 
     def remove_taxa(self, species_to_remove_set):
         new_alns = {}
