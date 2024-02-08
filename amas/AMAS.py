@@ -2167,7 +2167,8 @@ class MetaAlignment:
             # If the alignment dict is empty, i.e. no alignment associated with partition name, raise error
             raise ValueError("Partition '%s' is empty. No sequences to write." % partition_name)
 
-        if self.using_metapartitions:
+        # implementation of option --no-san (don't prepend input superalignment filename to the `split` outputs)
+        if self.no_sup_aln_name:
             file_name = partition_name + extension
         else:
             file_name = str(self.in_files[0].split('.')[0]) + "_" + partition_name + extension
