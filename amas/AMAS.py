@@ -1167,9 +1167,11 @@ class MetaAlignment:
         self.data_type = kwargs.get("data_type")
         self.command = kwargs.get("command")
         self.concat_out = kwargs.get("concat_out", "concatenated.out")
+        self.using_metapartitions = False
         self.check_align = kwargs.get("check_align", False)
         self.cores = kwargs.get("cores")
         self.by_taxon_summary = kwargs.get("by_taxon_summary")
+        self.short_aln_name = False
 
         if self.command == "replicate":
             self.no_replicates = kwargs.get("replicate_args")[0]
@@ -1178,6 +1180,17 @@ class MetaAlignment:
         if self.command == "split":
             self.split = kwargs.get("split_by")
             self.remove_empty = kwargs.get("remove_empty", False)
+
+        if self.command == "metapartitions":
+            self.using_metapartitions = True
+            self.split = kwargs.get("split_by")
+            self.remove_empty = kwargs.get("remove_empty", False)
+            self.short_aln_name = kwargs.get("short_aln_name", False)
+            self.aln_label = kwargs.get("aln_label")
+            if self.aln_label is not None and isinstance(self.aln_label, str):
+                self.aln_label = self.aln_label + "_"
+            else:
+                self.aln_label = ""
 
         if self.command == "remove":
             self.species_to_remove = kwargs.get("taxa_to_remove")
@@ -1188,6 +1201,7 @@ class MetaAlignment:
         if self.command == "translate":
             self.reading_frame = kwargs.get("reading_frame")
             self.genetic_code = kwargs.get("genetic_code")
+
         if self.command == "trim":
             self.trim_fraction = kwargs.get("trim_fraction")
             self.trim_out = kwargs.get("trim_out")
@@ -1734,16 +1748,25 @@ class MetaAlignment:
         position_counter = 1
         # get dict for alignment name and partition
         partitions = {}
+        digits_to_pad = len(str(len(alignments)))
 
         for alignment in alignments:
-
             # get alignment length from a random taxon
             partition_length = len(alignment[list(alignment.keys())[0]])
             # get base name of each alignment for use when writing partitions file
             # NOTE: the base name here is whatever comes before fist period in the file name
             alignment_name = self.alignment_objects[partition_counter - 1].get_name().split('.')[0]
-            # add a prefix to the partition names
-            partition_name = "p" + str(partition_counter) + "_" + alignment_name
+
+            if self.using_metapartitions:
+                # implementation of option -z|--short-aln-name; -q|--aln-label will be a string or "" (see class definition)
+                if self.short_aln_name:
+                    # omit original alignment names from the printed partition file
+                    partition_name = self.aln_label + "p" + str(partition_counter).zfill(digits_to_pad)
+                else:
+                    # keep original alignment names in the printed partition file
+                    partition_name = self.aln_label + "p" + str(partition_counter).zfill(digits_to_pad) + "_" + alignment_name
+            else:
+                partition_name = "p" + str(partition_counter) + "_" + alignment_name
 
             start = position_counter
             position_counter += partition_length
