@@ -815,7 +815,8 @@ class Alignment:
         self.parsed_aln = self.get_parsed_aln()
 
     def __str__(self):
-        return self.get_name
+        #  purpose of this override(?); original version returned the method object
+        return self.get_name()
 
     def get_aln_input(self):
         # open and parse input file
