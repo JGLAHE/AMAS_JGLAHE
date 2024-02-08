@@ -412,7 +412,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
         # translate command
         parser = argparse.ArgumentParser(
             formatter_class=argparse.RawTextHelpFormatter,
-            description="Translate a protein-coding DNA alignment into amino acids",
+            description="Translate a protein-coding DNA alignment into amino acids"
         )
         parser.add_argument(
             "-b",
@@ -1180,6 +1180,7 @@ class MetaAlignment:
 
         if self.command == "remove":
             self.species_to_remove = kwargs.get("taxa_to_remove")
+            self.species_to_remove_set = set(self.species_to_remove)
             self.reduced_file_prefix = kwargs.get("out_prefix")
             self.check_taxa = kwargs.get("check_taxa", False)
 
@@ -1765,26 +1766,26 @@ class MetaAlignment:
 
         return concatenated, partitions
 
-    def remove_from_alignment(self, alignment, species_to_remove, index):
+    def remove_from_alignment(self, alignment, species_to_remove_set, index):
         # remove taxa from alignment
         aln_name = self.get_alignment_name_no_ext(index)
-        for taxon in species_to_remove:
+        for taxon in species_to_remove_set:
             if taxon not in alignment.keys():
                 print(
                     "WARNING: Taxon '" + taxon + "' not found in '" + aln_name + "'.\nIf you expected it to be there, "
                     "make sure to replace all taxon name spaces with underscores and that you are not using quotes."
                 )
 
-            new_alignment = {species: seq for species, seq in alignment.items() if species not in species_to_remove}
+            new_alignment = {species: seq for species, seq in alignment.items() if species not in species_to_remove_set}
 
             aln_tuple = (aln_name, new_alignment)
 
         return aln_tuple
 
-    def remove_taxa(self, species_to_remove):
+    def remove_taxa(self, species_to_remove_set):
         new_alns = {}
         for index, alignment in enumerate(self.parsed_alignments):
-            aln_name, aln_dict = self.remove_from_alignment(alignment, species_to_remove, index)
+            aln_name, aln_dict = self.remove_from_alignment(alignment, species_to_remove_set, index)
             # check if alignment is not empty:
             if aln_dict:
                 new_alns[aln_name] = aln_dict
