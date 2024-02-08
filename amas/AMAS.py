@@ -2184,6 +2184,32 @@ class MetaAlignment:
         self.file_overwrite_error(out_file_name)
         self.write_formatted_file(file_format, out_file_name, alignment)
 
+    def write_metapartitions(self, file_format):
+        # write metapartitions - combines split and concat
+        print("write_out elif action == metapartitions")
+        metapartition_extension = self.get_metapartition_extension(file_format)
+        list_of_alignments = self.get_partitioned(self.split)
+        length = len(list_of_alignments)
+        err_indx = 0
+
+        new_in_files = []
+        for item in list_of_alignments:
+            try:
+                for new_file_name in self.write_split(item, file_format, metapartition_extension):
+                    new_in_files.append(new_file_name)
+            except ValueError:
+                err_indx += 1
+
+        print("Wrote " + str(length - err_indx) + " " + str(file_format) + " metapartition files from partitions provided")
+
+        # now set inputs to be the collated metapartition alignment files
+        self.in_files = new_in_files
+        self.alignment_objects = self.get_alignment_objects()
+        self.parsed_alignments = self.get_parsed_alignments()
+
+        # concat metapartition alignment files
+        self.write_concat(file_format)
+
     def write_out(self, action, file_format):
         # write other output files depending on command (action)
         extension = self.get_extension(file_format)
@@ -2218,6 +2244,9 @@ class MetaAlignment:
                     err_indx += 1
                     pass
             print("Wrote " + str(length - err_indx) + " " + str(file_format) + " files from partitions provided")
+
+        elif action == "metapartitions":
+            self.write_metapartitions(file_format)
 
         elif action == "remove":
             aln_no = self.write_reduced(file_format, extension)
@@ -2272,6 +2301,10 @@ def main():
         meta_aln.write_out("translate", kwargs["out_format"])
     if meta_aln.command == "trim":
         meta_aln.write_out("trim", kwargs["out_format"])
+
+    if meta_aln.command == "metapartitions":
+        meta_aln.write_out("metapartitions", kwargs["out_format"])
+        meta_aln.write_partitions(kwargs["concat_part"], kwargs["part_format"], "none")
 
         # meta_aln.write_out("translate", kwargs["out_format"])
 
