@@ -2035,6 +2035,15 @@ class MetaAlignment:
                     part_string += "WAG, " + key + "_pos3" + " = " + str(int(start) + 2) + "-" + end + "\\3" + "\n"
         return part_string
 
+    def replace_string_in_file(self, file_name, old_string, new_string):
+        # global string replacement in file
+        with open(file_name, "r", encoding="utf-8") as file:
+            file_content = file.read()
+        # write globally replaced content back to file
+        glb_replaced_content = file_content.replace(old_string, new_string)
+        with open(file_name, "w", encoding="utf-8") as file:
+            file.write(glb_replaced_content)
+
     def write_partitions(self, file_name, part_format, codons):
         # write partitions file for concatenated alignment
         self.file_overwrite_error(file_name)
@@ -2045,6 +2054,10 @@ class MetaAlignment:
                 part_file.write(self.print_raxml_partitions(self.data_type, codons))
             if part_format == "unspecified":
                 part_file.write(self.print_unspecified_partitions(codons))
+
+            if self.using_metapartitions:
+                self.replace_string_in_file(file_name, '-meta =', ' =')
+
         print("Wrote partitions for the concatenated file to '" + file_name + "'")
 
     def get_extension(self, file_format):
@@ -2061,6 +2074,21 @@ class MetaAlignment:
             extension = "-out.int-nex"
 
         return extension
+
+    def get_metapartition_extension(self, file_format):
+        # get proper metapartition_extension string
+        if file_format == "phylip":
+            metapartition_extension = "-meta.phy"
+        elif file_format == "phylip-int":
+            metapartition_extension = "-meta.int-phy"
+        elif file_format == "fasta":
+            metapartition_extension = "-meta.fas"
+        elif file_format == "nexus":
+            metapartition_extension = "-meta.nex"
+        elif file_format == "nexus-int":
+            metapartition_extension = "-meta.int-nex"
+
+        return metapartition_extension
 
     def file_overwrite_error(self, file_name):
         # print warning when overwriting a file
