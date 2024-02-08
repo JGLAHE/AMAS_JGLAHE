@@ -1906,7 +1906,6 @@ class MetaAlignment:
 
     def print_nexus_int(self, source_dict):
         # print nexus interleaved-formatted string from a dictionary
-
         if self.data_type == "aa":
             data_type = "PROTEIN"
         elif self.data_type == "dna":
@@ -1919,7 +1918,6 @@ class MetaAlignment:
         header = str(len(source_dict)) + " " + str(seq_length)
         # this will be a list of tuples to hold taxa names and sequences
         seq_matrix = []
-
         nexus_int_string = (
             "#NEXUS\n\nBEGIN DATA;\n\tDIMENSIONS  NTAX=" + str(no_taxa) + " NCHAR=" + str(seq_length)
             + ";\n\tFORMAT   INTERLEAVE" + "   DATATYPE=" + data_type + "  GAP = - MISSING = ?;\n\tMATRIX\n"
@@ -1956,6 +1954,7 @@ class MetaAlignment:
         part_string = ""
         part_dict = self.get_concatenated(self.parsed_alignments)[1]
         part_list = self.natural_sort(part_dict.keys())
+
         if codons == "none":
             for key in part_list:
                 part_string += key + " = " + str(part_dict[key]) + "\n"
@@ -1980,6 +1979,7 @@ class MetaAlignment:
         # write beginning of nexus sets
         part_string += "#NEXUS\n\n"
         part_string += "BEGIN SETS;\n"
+
         if codons == "none":
             for key in part_list:
                 part_string += "\tcharset " + key + " = " + str(part_dict[key]) + ";\n"
@@ -2002,6 +2002,7 @@ class MetaAlignment:
         part_string = ""
         part_dict = self.get_concatenated(self.parsed_alignments)[1]
         part_list = self.natural_sort(part_dict.keys())
+
         if data_type == "dna":
             if codons == "none":
                 for key in part_list:
