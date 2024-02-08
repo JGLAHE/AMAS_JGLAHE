@@ -343,6 +343,7 @@ Use AMAS <command> -h for help with arguments of the command of interest
             '''    and partition file entries in order to remove tags applied by each respective operation.\n\n'''
             '''    `metapartitions` combines these steps into one command, with the options `--prepend` and `--no-mpan`\n'''
             '''    providing additional control over the collated (meta)partition names (see their respective help entries).\n\n'''
+            '''    Note: in this mode, the format of the input (super)alignment file determines that of all outputs (-u|--out-format is disabled)!\n\n'''
         )
         parser.add_argument(
             "-p",
@@ -357,14 +358,6 @@ Use AMAS <command> -h for help with arguments of the command of interest
             dest = "concat_out",
             default = "concatenated-meta.out",
             help = "File name for the concatenated alignment of metapartitions. Default: 'concatenated-meta.out'"
-        )
-        parser.add_argument(
-            "-u",
-            "--out-format",
-            dest = "out_format",
-            choices = ["fasta", "phylip", "nexus", "phylip-int", "nexus-int"],
-            default = "fasta",
-            help = "File format for the output alignments (split and concatenated). Default: fasta"
         )
         parser.add_argument(
             "-y",
@@ -2337,7 +2330,14 @@ def main():
         meta_aln.write_out("trim", kwargs["out_format"])
 
     if meta_aln.command == "metapartitions":
-        meta_aln.write_out("metapartitions", kwargs["out_format"])
+        # `metapartitions` is essentially `split` + `concat`. Currently you can't set an out_format:
+        # it's automatically set to match the in_format because the intermediate `split` outputs become
+        # the 'new' in_files for the `concat` operation due to calling either:
+        #  -> AminoAcidAlignment(Alignment.__init__(self, in_file, in_format, data_type)) 
+        #  -> DNAAlignment(Alignment.__init__(self, in_file, in_format, data_type))
+        # through MetaAlignment.get_alignment_object(alignment, self.in_format, self.data_type)
+        #
+        meta_aln.write_out("metapartitions", kwargs["in_format"])
         meta_aln.write_partitions(kwargs["concat_part"], kwargs["part_format"], "none")
 
         # meta_aln.write_out("translate", kwargs["out_format"])
