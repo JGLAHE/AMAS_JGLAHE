@@ -2332,11 +2332,10 @@ def main():
     if meta_aln.command == "metapartitions":
         # `metapartitions` is essentially `split` + `concat`. Currently you can't set an out_format:
         # it's automatically set to match the in_format because the intermediate `split` outputs become
-        # the 'new' in_files for the `concat` operation due to calling either:
-        #  -> AminoAcidAlignment(Alignment.__init__(self, in_file, in_format, data_type)) 
+        # the 'new' in_files for the `concat` operation, and then calling either:
+        #  -> AminoAcidAlignment(Alignment.__init__(self, in_file, in_format, data_type))
         #  -> DNAAlignment(Alignment.__init__(self, in_file, in_format, data_type))
         # through MetaAlignment.get_alignment_object(alignment, self.in_format, self.data_type)
-        #
         meta_aln.write_out("metapartitions", kwargs["in_format"])
         meta_aln.write_partitions(kwargs["concat_part"], kwargs["part_format"], "none")
 
