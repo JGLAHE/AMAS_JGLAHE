@@ -1740,7 +1740,7 @@ class MetaAlignment:
             # get alignment length from a random taxon
             partition_length = len(alignment[list(alignment.keys())[0]])
             # get base name of each alignment for use when writing partitions file
-            # NOTE: the base name here is whatever comes before fist perion in the file name
+            # NOTE: the base name here is whatever comes before fist period in the file name
             alignment_name = self.alignment_objects[partition_counter - 1].get_name().split('.')[0]
             # add a prefix to the partition names
             partition_name = "p" + str(partition_counter) + "_" + alignment_name
@@ -1776,7 +1776,7 @@ class MetaAlignment:
                     "WARNING: Taxon '" + taxon + "' not found in '" + aln_name + "'.\nIf you expected it to be there, "
                     "make sure to replace all taxon name spaces with underscores and that you are not using quotes."
                 )
-
+        # originally within for-loop scope (redundancy)
         new_alignment = {species: seq for species, seq in alignment.items() if species not in species_to_remove_set}
 
         return aln_name, new_alignment
@@ -1901,7 +1901,7 @@ class MetaAlignment:
             "#NEXUS\n\nBEGIN DATA;\n\tDIMENSIONS  NTAX=" + str(no_taxa) + " NCHAR=" + str(seq_length)
             + ";\n\tFORMAT   INTERLEAVE" + "   DATATYPE=" + data_type + "  GAP = - MISSING = ?;\n\tMATRIX\n"
         )
-
+        # each sequence line will have 500 characters
         n = 500
 
         # recreate sequence matrix
