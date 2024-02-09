@@ -733,16 +733,16 @@ class FileParser:
         # original: `matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)`
         # new version: more permissive -> handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files
         matches = re.finditer(
-            r"""^[ \t]*                           # start of line w/ zero-or-more (just) whitespaces/tabs
+            r"""^[ \t]*                                 # start of line w/ zero-or-more (just) whitespaces/tabs
                 (
-                 (?P<nexus>charset[ ]+)           # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
+                 (?P<nexus>charset[ ]+)                 # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
                  |
-                 (?P<raxml>[A-Za-z0-9_+]+,[ \t]+) # case 2: RAxML/RAxML-NG model(+other pars); partition name
+                 (?P<raxml>[A-Za-z0-9_+\.]+,[ \t]+)     # case 2: RAxML/RAxML-NG model(+other pars); partition name
                 )?
-                (?P<partition_name>[A-Za-z0-9_\-]+) # case 3: just the partition name
-                [ ]*=[ ]*                         # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
-                (?P<numbers>[\\0-9, -]+)          # position ranges w/ stride (multiple intervals; from original regex)
-                (?P<nexus_term>[ ]*[;])?          # whitespace-prepended (or unprepended) ';' (nexus terminator)
+                (?P<partition_name>[A-Za-z0-9_\-]+)     # case 3: just partition name (including one that contain residual '-out'/'-meta' suffixes)
+                [ ]*=[ ]*                               # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
+                (?P<numbers>[\\0-9, -]+)                # position ranges w/ stride (multiple intervals; from original regex)
+                (?P<nexus_term>[ ]*[;])?                # whitespace-prepended (or unprepended) ';' (nexus terminator)
             """,
             self.in_file_lines,
             re.MULTILINE | re.VERBOSE
@@ -1548,7 +1548,7 @@ class MetaAlignment:
             parsed = alignment.parsed_aln
             add_to_parsed_alignments(parsed)
             # checking if every seq has the same length or if parsed is not empty; exit if false
-            if self.check_align == True:
+            if self.check_align:
                 equal = all(
                     x == [len(list(parsed.values())[i]) for i in range(0,len(list(parsed.values())))][0]
                     for x in [len(list(parsed.values())[i]) for i in range(0,len(list(parsed.values())))]
