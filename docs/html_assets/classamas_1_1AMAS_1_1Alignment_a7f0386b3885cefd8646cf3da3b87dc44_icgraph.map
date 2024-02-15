@@ -1,0 +1,9 @@
+<map id="amas.AMAS.Alignment.append_count" name="amas.AMAS.Alignment.append_count">
+<area shape="rect" id="Node000001" title=" " alt="" coords="564,45,831,70"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1Alignment.html#a2adefbe90db495bb21bf055ca5d1fbbc" title=" " alt="" coords="320,37,516,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="550,60,516,60,516,55,550,55"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1AminoAcidAlignment.html#ac8b7505ca8bbf80014f851c998539d38" title=" " alt="" coords="5,5,272,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="306,47,272,43,273,38,307,42"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1DNAAlignment.html#ab44f00bb5d0e12dc4c7d601ebe2c3cd7" title=" " alt="" coords="26,69,251,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="307,73,252,79,251,74,306,67"/>
+</map>

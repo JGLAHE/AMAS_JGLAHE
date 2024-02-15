@@ -1,0 +1,17 @@
+<map id="amas.AMAS.Alignment.get_counts_from_parsed" name="amas.AMAS.Alignment.get_counts_from_parsed">
+<area shape="rect" id="Node000001" title=" " alt="" coords="929,73,1125,113"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1Alignment.html#acadf4466f448f06f571c0231d69ca97a" title=" " alt="" coords="635,49,881,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="915,83,865,77,866,71,916,77"/>
+<area shape="rect" id="Node000006" href="$classamas_1_1AMAS_1_1Alignment.html#a2adefbe90db495bb21bf055ca5d1fbbc" title=" " alt="" coords="660,101,856,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="916,108,857,114,856,109,915,102"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1Alignment.html#ad1d5ac1a3e3cbf30cd56a8f04b784786" title=" " alt="" coords="355,37,551,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="621,62,552,61,552,56,621,57"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1AminoAcidAlignment.html#ad547d28a42150b999ff67732575af217" title=" " alt="" coords="5,5,272,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="341,49,272,42,273,36,342,43"/>
+<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1DNAAlignment.html#af763e718cd4e1241a4a2855e6dc2b3b7" title=" " alt="" coords="26,69,251,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="342,71,252,81,251,75,341,66"/>
+<area shape="rect" id="Node000007" href="$classamas_1_1AMAS_1_1AminoAcidAlignment.html#ac8b7505ca8bbf80014f851c998539d38" title=" " alt="" coords="320,101,587,141"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="646,124,587,124,587,119,646,119"/>
+<area shape="rect" id="Node000008" href="$classamas_1_1AMAS_1_1DNAAlignment.html#ab44f00bb5d0e12dc4c7d601ebe2c3cd7" title=" " alt="" coords="341,165,566,205"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="649,147,550,168,549,163,648,142"/>
+</map>

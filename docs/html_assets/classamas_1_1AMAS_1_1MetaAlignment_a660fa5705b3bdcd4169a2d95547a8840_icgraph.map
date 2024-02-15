@@ -1,0 +1,26 @@
+<map id="amas.AMAS.MetaAlignment.get_concatenated" name="amas.AMAS.MetaAlignment.get_concatenated">
+<area shape="rect" id="Node000001" title=" " alt="" coords="951,142,1180,182"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a37bdf2cd3b8de8e1cfb9fb9882ab39ba" title=" " alt="" coords="329,19,558,59"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1036,134,979,81,942,55,902,36,857,23,810,15,714,8,623,12,544,22,543,17,623,7,714,3,810,10,858,18,904,31,944,51,982,76,1040,130"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1MetaAlignment.html#ae2bea689781b960f994e8f62f3a5b657" title=" " alt="" coords="638,46,877,86"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1006,139,902,101,858,89,859,83,903,95,1008,134"/>
+<area shape="rect" id="Node000006" href="$classamas_1_1AMAS_1_1MetaAlignment.html#aca974b1c46c66884bb7a40fe1b355e3d" title=" " alt="" coords="638,110,877,150"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="936,151,877,145,877,140,937,146"/>
+<area shape="rect" id="Node000007" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a1d63350847f34c0956592faf0cdf29dc" title=" " alt="" coords="638,174,877,214"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="937,178,877,184,877,179,936,173"/>
+<area shape="rect" id="Node000008" href="$classamas_1_1AMAS_1_1MetaAlignment.html#ac9f4f7d70aadc41fafd0a80b47b0f291" title=" " alt="" coords="638,238,877,278"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="1008,190,903,229,859,240,858,235,902,223,1006,185"/>
+<area shape="rect" id="Node000009" href="$classamas_1_1AMAS_1_1MetaAlignment.html#acc81f1b40dca8320767c4121cac48e84" title=" " alt="" coords="612,303,903,328"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="1038,194,979,245,943,271,904,292,867,305,865,300,902,288,940,267,976,241,1034,190"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a02f1c5fe992b79527f85832acacdb9bf" title=" " alt="" coords="5,245,275,271"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="405,70,161,247,157,243,402,65"/>
+<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a678a501bcba06b7489d3293f903e3417" title=" " alt="" coords="323,143,564,183"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="644,92,613,101,549,123,492,146,490,141,547,118,611,95,643,87"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="624,147,565,153,564,148,624,141"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="624,184,564,178,565,172,624,178"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="643,237,611,229,492,186,494,181,613,223,645,232"/>
+<area shape="poly" id="edge14_Node000009_Node000003" title=" " alt="" coords="671,303,564,286,414,273,275,265,275,260,415,267,564,281,672,298"/>
+<area shape="rect" id="Node000010" href="$classamas_1_1AMAS_1_1MetaAlignment.html#abb37f60bfc2fd2a91ff56a69e1b5457e" title=" " alt="" coords="323,295,564,335"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="598,318,564,318,564,313,598,313"/>
+<area shape="poly" id="edge13_Node000010_Node000003" title=" " alt="" coords="323,295,207,273,208,268,324,290"/>
+</map>

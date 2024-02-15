@@ -1,0 +1,19 @@
+<map id="amas.AMAS.Alignment.summarize_alignment_by_taxa" name="amas.AMAS.Alignment.summarize_alignment_by_taxa">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,120,253,160"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1Alignment.html#a8bdfb8c88853e84307fc176bf1192414" title=" " alt="" coords="315,5,528,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,117,300,62,341,47,342,52,302,66,174,122"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1Alignment.html#a4b58a1d644873a3c9484c49a2a0ae7ab" title=" " alt="" coords="841,76,1037,116"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,117,301,105,443,95,586,90,828,90,828,95,586,95,443,100,302,111,222,123"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1Alignment.html#a1a6ef8926b1f995e92fa1bdd5ec0ce52" title=" " alt="" coords="323,120,519,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="253,137,309,137,309,143,253,143"/>
+<area shape="rect" id="Node000007" href="$classamas_1_1AMAS_1_1Alignment.html#a558d97abf4b5e3af7c088818e5849c07" title=" " alt="" coords="301,185,541,210"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="232,157,343,179,342,185,231,163"/>
+<area shape="rect" id="Node000008" href="$classamas_1_1AMAS_1_1Alignment.html#a7f13d227701f8e55cdc4c967ba7fcd17" title=" " alt="" coords="323,235,519,275"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="168,158,230,189,302,220,325,228,324,233,300,225,228,194,166,162"/>
+<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1Alignment.html#a7ad5988bb8db9344c26ee9002268d1b3" title=" " alt="" coords="841,152,1037,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="511,157,590,169,713,176,828,175,828,180,713,181,589,175,510,163"/>
+<area shape="rect" id="Node000006" href="$classamas_1_1AMAS_1_1Alignment.html#a9ec552f47644ae5fcf11ea3e9365d4bc" title=" " alt="" coords="589,120,793,160"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="520,137,575,137,575,143,520,143"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="793,119,827,113,828,118,794,125"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="794,151,828,155,827,160,793,156"/>
+</map>

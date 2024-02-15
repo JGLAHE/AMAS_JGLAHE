@@ -1,0 +1,13 @@
+<map id="amas.AMAS.Alignment.get_taxa_no" name="amas.AMAS.Alignment.get_taxa_no">
+<area shape="rect" id="Node000001" title=" " alt="" coords="616,37,812,77"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1DNAAlignment.html#ae7b8585abc0223c94ba2481a05e8ad8d" title=" " alt="" coords="331,5,557,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="602,47,557,41,557,36,602,41"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1Alignment.html#a6fa0d4ecab2810d3d1413dbbcabaa9e6" title=" " alt="" coords="320,69,568,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="603,73,569,77,568,72,602,68"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1DNAAlignment.html#af763e718cd4e1241a4a2855e6dc2b3b7" title=" " alt="" coords="26,5,251,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="318,28,252,28,252,23,318,23"/>
+<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1AminoAcidAlignment.html#ac8b7505ca8bbf80014f851c998539d38" title=" " alt="" coords="5,69,272,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="307,92,272,92,272,87,307,87"/>
+<area shape="rect" id="Node000006" href="$classamas_1_1AMAS_1_1DNAAlignment.html#ab44f00bb5d0e12dc4c7d601ebe2c3cd7" title=" " alt="" coords="26,133,251,173"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="335,115,235,136,234,131,334,110"/>
+</map>

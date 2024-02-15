@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['gencode_5fncbi_5f1_0',['gencode_NCBI_1',['../classamas_1_1AMAS_1_1MetaAlignment.html#a7dd4a974f41010617fafe1d756288278',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f10_1',['gencode_NCBI_10',['../classamas_1_1AMAS_1_1MetaAlignment.html#a00d98aa5d03b8658eb461107be8709ec',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f11_2',['gencode_NCBI_11',['../classamas_1_1AMAS_1_1MetaAlignment.html#aae5997dcc2a26fd83b2f1b7bc52a7cd7',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f12_3',['gencode_NCBI_12',['../classamas_1_1AMAS_1_1MetaAlignment.html#ae691dc95ee882966955ce89556ac3b04',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f13_4',['gencode_NCBI_13',['../classamas_1_1AMAS_1_1MetaAlignment.html#ac9912e872edd73db8e16f4eb55cc8553',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f14_5',['gencode_NCBI_14',['../classamas_1_1AMAS_1_1MetaAlignment.html#a69fad214e99629d40f5423a517fc3c64',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f16_6',['gencode_NCBI_16',['../classamas_1_1AMAS_1_1MetaAlignment.html#acc76d6db55f35680f0d5a8d85455f931',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f2_7',['gencode_NCBI_2',['../classamas_1_1AMAS_1_1MetaAlignment.html#a2a195f997c599e05e160514dc037aaf4',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f21_8',['gencode_NCBI_21',['../classamas_1_1AMAS_1_1MetaAlignment.html#a4e0f11b126acaa8be54da15acdc4bea3',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f22_9',['gencode_NCBI_22',['../classamas_1_1AMAS_1_1MetaAlignment.html#a0d51b540741ca112a962256cc32c43ad',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f23_10',['gencode_NCBI_23',['../classamas_1_1AMAS_1_1MetaAlignment.html#a8a88848d0909302b657d42b79a2628ec',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f24_11',['gencode_NCBI_24',['../classamas_1_1AMAS_1_1MetaAlignment.html#af95aaa741b7c35bc65fbcac7d3ca4017',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f25_12',['gencode_NCBI_25',['../classamas_1_1AMAS_1_1MetaAlignment.html#ae59dfa5a75490c3079c0cdc90fc32289',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f26_13',['gencode_NCBI_26',['../classamas_1_1AMAS_1_1MetaAlignment.html#ae5f08cdfa662da57247c2e2a69b23e3a',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f3_14',['gencode_NCBI_3',['../classamas_1_1AMAS_1_1MetaAlignment.html#a0ae5a588d362a1f5185a14b0a49a9e1e',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f4_15',['gencode_NCBI_4',['../classamas_1_1AMAS_1_1MetaAlignment.html#aeb5afea6c15b14d6eaadaf0ca0ffe84a',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f5_16',['gencode_NCBI_5',['../classamas_1_1AMAS_1_1MetaAlignment.html#aecb84d096d3c5362589f418845ba0ab9',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f6_17',['gencode_NCBI_6',['../classamas_1_1AMAS_1_1MetaAlignment.html#ab12eea7fb5b9d392ea77eeb1f2376efa',1,'amas::AMAS::MetaAlignment']]],
+  ['gencode_5fncbi_5f9_18',['gencode_NCBI_9',['../classamas_1_1AMAS_1_1MetaAlignment.html#a016ee9847ebfe76254c2970cad6493e5',1,'amas::AMAS::MetaAlignment']]],
+  ['genetic_5fcode_19',['genetic_code',['../classamas_1_1AMAS_1_1MetaAlignment.html#a19d9cdfaa91de0d3f6299af59dc3a7a7',1,'amas::AMAS::MetaAlignment']]]
+];

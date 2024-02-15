@@ -1,0 +1,9 @@
+<map id="amas.AMAS.DNAAlignment.get_atgc_content" name="amas.AMAS.DNAAlignment.get_atgc_content">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,231,77"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1DNAAlignment.html#a2409ca3d32f437f9eb1a66259becdab0" title=" " alt="" coords="279,5,504,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,41,265,37,266,43,231,47"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1Alignment.html#a7f13d227701f8e55cdc4c967ba7fcd17" title=" " alt="" coords="293,69,489,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="231,68,280,74,280,79,231,73"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1DNAAlignment.html#a8e92c6af90944fd0b415964e00d3beb4" title=" " alt="" coords="552,5,777,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="504,23,539,23,539,28,504,28"/>
+</map>

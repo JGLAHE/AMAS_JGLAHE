@@ -1,0 +1,7 @@
+<map id="amas.AMAS.Alignment" name="amas.AMAS.Alignment">
+<area shape="rect" id="Node000001" title=" " alt="" coords="163,5,334,31"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1AminoAcidAlignment.html" title=" " alt="" coords="5,79,247,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,40,147,81,145,76,216,35"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1DNAAlignment.html" title=" " alt="" coords="271,79,471,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="281,35,353,76,350,81,279,40"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="amas.AMAS.MetaAlignment.write_replicate" name="amas.AMAS.MetaAlignment.write_replicate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,73,247,113"/>
+<area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a917bf289da48d75293a72099ae767749" title=" " alt="" coords="301,41,529,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,77,287,72,288,77,247,82"/>
+<area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a55b82d0a1842789dcd869e606799d360" title=" " alt="" coords="295,105,536,145"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="247,103,281,107,281,112,247,109"/>
+<area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a44e327ce92e71d53dd5df3a970c677f9" title=" " alt="" coords="587,5,866,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="510,102,535,90,549,78,558,65,567,52,583,40,597,33,600,38,585,44,571,56,562,68,553,82,537,95,512,107"/>
+<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a65b41dbc08ebdab3064e6380f30b1a8b" title=" " alt="" coords="585,55,869,80"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="520,102,584,90,640,80,641,85,584,95,521,107"/>
+<area shape="rect" id="Node000006" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a6713c50b2ed8cc81ff9a28990974f91c" title=" " alt="" coords="607,105,846,145"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="536,122,594,122,594,127,536,127"/>
+<area shape="rect" id="Node000007" href="$classamas_1_1AMAS_1_1MetaAlignment.html#a7bdf8292f710cfc6d72c64907ff81212" title=" " alt="" coords="584,169,869,195"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="521,142,584,154,641,164,640,170,584,159,520,147"/>
+<area shape="rect" id="Node000008" href="$classamas_1_1AMAS_1_1MetaAlignment.html#ace87374023f6fd729b2ef3e7d6548e5b" title=" " alt="" coords="607,219,846,259"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="453,142,514,173,585,203,615,213,614,218,583,209,512,178,451,147"/>
+</map>
