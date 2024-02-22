@@ -67,5 +67,5 @@ var searchData=
   ['get_5ftrim_5fselection_64',['get_trim_selection',['../classamas_1_1AMAS_1_1Alignment.html#ad163cbb67aba7df231327320cc9c193f',1,'amas::AMAS::Alignment']]],
   ['get_5ftrimmed_65',['get_trimmed',['../classamas_1_1AMAS_1_1MetaAlignment.html#aa5cb72e7a47f43f0a8e4579b2425e17d',1,'amas::AMAS::MetaAlignment']]],
   ['get_5fvariable_66',['get_variable',['../classamas_1_1AMAS_1_1Alignment.html#a61fc2453830dc22c52f10768ce0a19c0',1,'amas::AMAS::Alignment']]],
-  ['getting_20alignment_20statistics_67',['Getting alignment statistics',['../md_md_2README.html#autotoc_md6',1,'']]]
+  ['getting_20alignment_20statistics_67',['Getting alignment statistics',['../index.html#autotoc_md6',1,'']]]
 ];

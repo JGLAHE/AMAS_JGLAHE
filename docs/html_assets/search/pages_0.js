@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['amas_0',['AMAS',['../md_md_2README.html',1,'']]]
+  ['amas_0',['AMAS',['../index.html',1,'']]]
 ];

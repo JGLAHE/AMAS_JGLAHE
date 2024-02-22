@@ -25,24 +25,7 @@
 var NAVTREE =
 [
   [ "AMAS_JGLAHE", "index.html", [
-    [ "README", "md_md_2README.html", [
-      [ "This fork: AMAS_JGLAHE", "md_md_2README.html#autotoc_md1", null ],
-      [ "Installation", "md_md_2README.html#autotoc_md2", null ],
-      [ "Command line interface", "md_md_2README.html#autotoc_md3", [
-        [ "Examples", "md_md_2README.html#autotoc_md4", [
-          [ "Concatenating alignments", "md_md_2README.html#autotoc_md5", null ],
-          [ "Getting alignment statistics", "md_md_2README.html#autotoc_md6", null ],
-          [ "Converting among formats", "md_md_2README.html#autotoc_md7", null ],
-          [ "Splitting alignment by partitions: TODO update", "md_md_2README.html#autotoc_md8", null ],
-          [ "Translating a DNA alignment into aligned protein sequences", "md_md_2README.html#autotoc_md9", null ],
-          [ "Creating replicate data sets", "md_md_2README.html#autotoc_md10", null ],
-          [ "Removing taxa/sequences from alignment", "md_md_2README.html#autotoc_md11", null ],
-          [ "Checking if input is aligned", "md_md_2README.html#autotoc_md12", null ],
-          [ "TODO Metapartitions", "md_md_2README.html#autotoc_md13", null ]
-        ] ]
-      ] ],
-      [ "TODO AMAS as a Python module", "md_md_2README.html#autotoc_md14", null ]
-    ] ],
+    [ "README.md", "index.html", "index" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -56,7 +39,7 @@ var NAVTREE =
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
@@ -70,7 +53,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AMAS_8py.html",
-"classamas_1_1AMAS_1_1MetaAlignment.html#a65b41dbc08ebdab3064e6380f30b1a8b"
+"classamas_1_1AMAS_1_1MetaAlignment.html#a3ca98865ecb197001bbbe4698963f0c9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

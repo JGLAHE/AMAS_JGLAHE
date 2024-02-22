@@ -7,10 +7,9 @@ If you are using this program, please cite [this publication](https://peerj.com/
 Borowiec, M.L. 2016. AMAS: a fast tool for alignment manipulation and computing of summary statistics. PeerJ 4:e1660.
 ```
 ## This fork: AMAS_JGLAHE
-A standalone version of the main repo that's been modified to fit my needs, notably:
-- a `metapartition` command -> collates discontinuous metapartitions within a superalignment and concatenates them into a new superalignment of contiguous metapartitons.
-- less restrictions on partition file formatting -> accepts partition files for RAxML(-NG) and IQ-TREE2 (best_scheme, best_scheme.nex and best_model.nex).
-- minor formatting changes for pipeline inegration.
+Fork of the main repo which:
+- Adds a `metapartition` command -> collates discontinuous metapartitions within a superalignment and concatenates them into a new superalignment of contiguous metapartitons.
+- Reduces restrictions on input partition file formatting -> accepts partition files for RAxML(-NG) and IQ-TREE2 (best_scheme, best_scheme.nex and best_model.nex).
 
 ## Installation
 
@@ -145,7 +144,7 @@ In the above, the required options are combined with `convert` command to conver
 
 `AMAS` will not overwrite over input here but will create new files instead, automatically appending appropriate extensions to the input file's name: `-out.fas`, `-out.phy`, `-out.int-phy`, `-out.nex`, or `-out.int-nex`.
 
-### Splitting alignment by partitions: TODO update
+### Splitting alignment by partitions (updated partition parsing AMAS_JGLAHE) 
 If you have a partition file, you can split a concatenated alignment and write a file for each partition:
 ```
 python3 AMAS.py split -f nexus -d dna -i concat.nex -l partitions.txt -u nexus
@@ -156,9 +155,239 @@ In the above one input file `concat.nex` was provided for splitting with `split`
   AApos3  =  3-606\3
   28SAutapoInDels=7583, 7584, 7587, 7593
 ```
-If this was the `partitions.txt` file from the example command above, `AMAS` would write three output files called `concat_AApos1&2.nex`, `concat_AApos3.nex`, and `concat_28SautapoInDels.nex`. The partitions file will be parsed correctly as long as there is no text prior to the partition name (`CHARSET AApos1&2` or `DNA, AApos1&2` will not work) and commas separate ranges or individual sites in each partition.
+If this was the `partitions.txt` file from the example command above, `AMAS` would write three output files called `concat_AApos1&2.nex`, `concat_AApos3.nex`, and `concat_28SautapoInDels.nex`. The partitions file will be parsed correctly as long as there ~~is~~ are none ~~text prior to the partition name (`CHARSET AApos1&2` or `DNA, AApos1&2` will not work) and commas separate ranges or individual sites in each partition~~ of the following characters in partition names: `<>!?$^;:\/,.`; members of [\s] are also not allowed in partition names.
 
-Sometimes after splitting you will have alignments with taxa that have only gaps `-` or missing data `?`. If you want to these to not be included in the output , add `-j` or `--remove-empty` to the command line.   
+Sometimes after splitting you will have alignments with taxa that have only gaps `-` or missing data `?`. If you want to these to not be included in the output , add `-j` or `--remove-empty` to the command line.
+
+Partition files are parsed with `AMAS.FileParser.partition_parse()`, which in the JGLAHE fork of AMAS looks like this:
+```
+def partitions_parse(self):
+    # parse partitions file using regex
+    # original: `matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)`
+    # new version: more permissive -> handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files
+    matches = re.finditer(
+        r"""^[ \t]*                                 # start of line w/ zero-or-more (just) whitespaces/tabs
+            (
+             (?P<nexus>charset[ ]+)                 # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
+             |
+             (?P<raxml>[A-Za-z0-9_+\.]+,[ \t]+)     # case 2: RAxML/RAxML-NG model(+other pars); partition name
+            )?
+            (?P<partition_name>[A-Za-z0-9_@*&()\[\]{}'"%#|-]+) # partition name (handles various metcharacters, excludes [\s],<>?/:;~`\^$!)
+            [ ]*=[ ]*                               # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
+            (?P<numbers>[\\0-9, -]+)                # position ranges w/ stride (multiple intervals; from original regex)
+            (?P<nexus_term>[ ]*[;])?                # whitespace-prepended (or unprepended) ';' (nexus terminator)
+        """,
+        self.in_file_lines,
+        re.MULTILINE | re.VERBOSE
+    )
+
+    # initiate list to store dictionaries with lists
+    # of slice positions as values
+    partitions = []
+    add_to_partitions = partitions.append
+
+    for match in matches:
+        # initiate dictionary of partition name as key
+        dict_of_dicts = {}
+        # and list of dictionaries with slice positions
+        list_of_dicts = []
+        add_to_list_of_dicts = list_of_dicts.append
+        # get parition name and numbers from parsed partition strings
+        partition_name = match.group('partition_name')
+        numbers = match.group('numbers')
+        # remove any whitespace padding '-' (to be consistent with partition-writing format)
+        numbers = re.sub(r"[ ]*-[ ]*", "-", numbers)
+        # find all numbers that will be used to parse positions
+        positions = re.findall(r"([^ ,]+)", numbers)
+
+        for position in positions:
+            # create dictionary for slicing input sequence
+            # conditioning on whether positions are represented
+            # by range, range with stride, or single number
+            pos_dict = {}
+
+            if "-" in position:
+                m = re.search(r"([0-9]+)-([0-9]+)", position)
+                pos_dict["start"] = int(m.group(1)) - 1
+                pos_dict["stop"] = int(m.group(2))
+            else:
+                pos_dict["start"] = int(position) - 1
+                pos_dict["stop"] = int(position)
+    
+            if "\\" in position:
+                # Note: the value of `N` in `...\N` isn't read: the script simply assumes `N` is consistent with the number of
+                # increments per interval when the alignment is parsed with a stride of 3 (designating each cpos).
+                # E.g. For the partition file:
+                #       ...`1-N\2`
+                #       ...`2-N\2`
+                #       ...`(N+1)-M\2`
+                #       ...`(N+2)-M\2`
+                # 3'cpos are ignored due to the absence of intervals `3-N...`, `(N+3)-M...`, not because the associated stride values are`\2`
+                pos_dict["stride"] = 3
+            elif "\\" not in position:
+                pos_dict["stride"] = 1
+
+            add_to_list_of_dicts(pos_dict)
+
+        dict_of_dicts[partition_name] = list_of_dicts
+        add_to_partitions(dict_of_dicts)
+
+    return partitions
+```
+This version removes some of the partition formatting restrictions of the original AMAS repo version, with the updated partitions_parse() method facilitating the uses of native RAxML(-NG) and IQ-TREE2 partition files.
+
+The following is a contrived example to demonstrate this, along with the updated `metapartions` command. Consider the following superalignment `concat.fas`:
+```
+>S01
+CCCCCTGGCGCCGCCGCCGCCCCTCCTCCTCCTCCTCCCCCCCCC
+>S02
+AACAATGGAGCAGAAGAAGAAAATAATAATAATAATAAAAAAAAA
+>S03
+TTCTTTGGTGCTGATGTTGTTTTTTTTTTTTTTTATTTTTTTTTT
+>S04
+GGCGGTGGGGCGGAGGTGGGGGGTGGTGGTGTTGATGGGGGGGGG
+>S05
+CCCCCTGGCGCCGACGTCGGCCCTCCTCGTCTTCATCCCCCCCCC
+>S06
+AACAATGGCGCAGAAGTAGGAAATACTAGTATTAATAAAAAAAAA
+>S07
+TTCTTTGGCGCAGATGTTGGTTATTCTTGTTTTTATTTTTTTTTT
+>S08
+GGCGTTGGCGCAGATGTGGGGGATGCTGGTGTTGATGGGGGGGGG
+>S09
+CGCCTTGGCGCAGATGTGGGCCATCCTCGTCTTCATCCCCCCCCC
+>S10
+AGCATTGGCGCAGATGTGGGCAATACTAGTATTCATAAAAAAAAA
+>S11
+TGCTTTGGCGCAGATGTGGGCTATTCTTGTATTCATTTTATTTTT
+>S12
+GGCGTTGGCGCAGATGTGGGCGATGCTTGTATTCATGGGAGGTGG
+>S13
+CGCCTTGGCGCAGATGTGGGCCATGCTTGTATTCATCCCAGCTCC
+>S14
+AGCATTGGCGCAGATGTGGGCCATGCTTGTATTCATAAAAGATCA
+>S15
+TGCATTGGCGCAGATGTGGGCCATGCTTGTATTCATTTTAGATCT
+>S16
+TGCATGTTCTCATATTTGTGCCAGGCGTGGATGCAGGG?AGATCT
+>S17
+TGCATGTTCTCATATTTGTGCCAGGCGTGGATGCAGTTTAGATCT
+>S18
+AGCATGTTCTCATATTTGTGCCAGGCGTGGATGCAGAAAAGATCA
+>S19
+CGCCTGTTCTCATATTTGTGCCAGGCGTGGATGCAGCCCAGCTCC
+>S20
+GGCGTGTTCTCATATTTGTGCGAGGCGTGGATGCAGGGGAGGTGG
+>S21
+TGCTTGTTCTCATATTTGTGCTAGTCGTGGATGCAGTTTATTTTT
+>S22
+AGCATGTTCTCATATTTGTGCAAGACGAGGATGCAGAAAAAAAAA
+>S23
+CGCCTGTTCTCATATTTGTGCCAGCCGCGGCTGCAGCCCCCCCCC
+>S24
+GGCGTGTTCTCATATTTGTGGGAGGCGGGGGTGGAGGGGGGGGGG
+>S25
+TTCTTGTTCTCATATTTTTGTTAGTCGTGGTTGTAGTTTTTTTTT
+>S26
+AACAAGTTCTCATAATTATGAAAGACGAGGATGAAGAAAAAAAAA
+>S27
+CCCCCGTTCTCCTACTTCTGCCCGCCGCGGCTGCAGCCCCCCCCC
+>S28
+GGCGGGTTGTCGTAGTTGTGGGGGGGGGGGGTGGAGGGGGGGGGG
+>S29
+TTCTTGTTTTCTTATTTTTTTTTGTTGTTGTTGTAGTTTTTTTTT
+>S30
+AACAAGTTATCATAATAATAAAAGAAGAAGAAGAAGAAAAAAAAA
+>S31
+CCCCCGTTCTCCTCCTCCTCCCCGCCGCCGCCGCCGCCCCCCCCC
+```
+Its partition file `partitions.txt` contain various formatting challenges to test the parser, but it includes the basic directives found in native RAxML(-NG) and IQ-TREE2 partition files:
+```
+charset @@(partition_A_pos1) =      7 - 21\3       
+  charset %s = 8  -21\3
+    charset "partition_A_pos3" = 9-   21\3
+Q.insect, (partition_B_pos)1 = 40-    45\3
+Q.insect,   '[partition_B_pos2] = 41   -45\3
+Q.insect, par&&tition_B_pos3   =,,  42-45\3 
+    GTR+G4,    pa&rtition_C =  , , , ,,38 39            37,
+9.20b, #partition&|_D_pos1 = 1-6\3 22 - 36\3
+       partition_D_pos2= 2-6\3 23 -36\3
+p1_3_a                 = 3-6\3             24 -      36\3
+  charpartition mymodels =
+    9.20b: partition_D_pos1;
+end;
+```
+While most of the partitions here are not contiguous with respect to the `concat.fas`, this superalignment can be converted into one with contiguous metapartitons by running the command:
+```
+./AMAS.py metapartitions -i concat.fas -f fasta -d dna --no-san --no-mpan -l partitions.txt -t concat.out.fas`
+```
+This generates `concat.out.fas`:
+```
+>S01
+GGGGGGCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCTTTTTT
+>S02
+GGGGGGCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACTTTTTT
+>S03
+GGGGGGCATTTTTTTTTTTTTTTTTTTTTTTTTTTTTACTTTTTT
+>S04
+GGGGGGCATGGGGGGGGGGGGGGGGGGGGGGGGGGGTACTTTTTT
+>S05
+GGGGGGCATGCCCCCCCCCCCCCCCCCCCCCCCCCGTACTTTTTT
+>S06
+GGGGGGCATGCAAAAAAAAAAAAAAAAAAAAAAACGTACTTTTTT
+>S07
+GGGGGGCATGCATTTTTTTTTTTTTTTTTTTTTACGTACTTTTTT
+>S08
+GGGGGGCATGCATGGGGGGGGGGGGGGGGGGGTACGTACTTTTTT
+>S09
+GGGGGGCATGCATGCCCCCCCCCCCCCCCCCGTACGTACTTTTTT
+>S10
+GGGGGGCATGCATGCAAAAAAAAAAAAAAACGTACGTACTTTTTT
+>S11
+GGGGGGCATGCATGCATTTTTTTTTTTTTACGTACGTACTTTTTT
+>S12
+GGGGGGCATGCATGCATGGGGGGGGGGGTACGTACGTACTTTTTT
+>S13
+GGGGGGCATGCATGCATGCCCCCCCCCGTACGTACGTACTTTTTT
+>S14
+GGGGGGCATGCATGCATGCAAAAAAACGTACGTACGTACTTTTTT
+>S15
+GGGGGGCATGCATGCATGCATTTTTACGTACGTACGTACTTTTTT
+>S16
+TTTTTTCATGCATGCATGCATG?GTACGTACGTACGTACGGGGGG
+>S17
+TTTTTTCATGCATGCATGCATTTTTACGTACGTACGTACGGGGGG
+>S18
+TTTTTTCATGCATGCATGCAAAAAAACGTACGTACGTACGGGGGG
+>S19
+TTTTTTCATGCATGCATGCCCCCCCCCGTACGTACGTACGGGGGG
+>S20
+TTTTTTCATGCATGCATGGGGGGGGGGGTACGTACGTACGGGGGG
+>S21
+TTTTTTCATGCATGCATTTTTTTTTTTTTACGTACGTACGGGGGG
+>S22
+TTTTTTCATGCATGCAAAAAAAAAAAAAAACGTACGTACGGGGGG
+>S23
+TTTTTTCATGCATGCCCCCCCCCCCCCCCCCGTACGTACGGGGGG
+>S24
+TTTTTTCATGCATGGGGGGGGGGGGGGGGGGGTACGTACGGGGGG
+>S25
+TTTTTTCATGCATTTTTTTTTTTTTTTTTTTTTACGTACGGGGGG
+>S26
+TTTTTTCATGCAAAAAAAAAAAAAAAAAAAAAAACGTACGGGGGG
+>S27
+TTTTTTCATGCCCCCCCCCCCCCCCCCCCCCCCCCGTACGGGGGG
+>S28
+TTTTTTCATGGGGGGGGGGGGGGGGGGGGGGGGGGGTACGGGGGG
+>S29
+TTTTTTCATTTTTTTTTTTTTTTTTTTTTTTTTTTTTACGGGGGG
+>S30
+TTTTTTCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACGGGGGG
+>S31
+TTTTTTCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCGGGGGG
+```
+The figure below more clearly demonstrates this transformation: `concat.fas` on the left is converted to `concat.out.fas` on the right using the `metapartitions` command above; visualized in [Aliview](https://github.com/AliView/AliView) v1.28
+
 
 ### Translating a DNA alignment into aligned protein sequences
 You can translate a nucleotide alignment to amino acids with AMAS using one of the [NCBI translation tables](http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi). For example, to correctly translate an insect mitochondrial gene alignment that begins at a second codon position:

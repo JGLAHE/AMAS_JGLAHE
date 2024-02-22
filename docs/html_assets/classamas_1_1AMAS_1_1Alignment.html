@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('classamas_1_1AMAS_1_1Alignment.html','
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classamas_1_1AMAS_1_1Alignment-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">amas.AMAS.Alignment Class Reference</div></div>
 </div><!--header-->
@@ -204,12 +205,15 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ae6f22584756fd033475a70beb36fabef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5dd4f423f94235319e4cf7745acf3a7" id="r_ac5dd4f423f94235319e4cf7745acf3a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classamas_1_1AMAS_1_1Alignment.html#ac5dd4f423f94235319e4cf7745acf3a7">missing_records</a></td></tr>
 <tr class="separator:ac5dd4f423f94235319e4cf7745acf3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34483635e3041ffb04517d1d22806c31" id="r_a34483635e3041ffb04517d1d22806c31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classamas_1_1AMAS_1_1Alignment.html#a34483635e3041ffb04517d1d22806c31">all_matrix_cells</a></td></tr>
-<tr class="separator:a34483635e3041ffb04517d1d22806c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51b0dae6000ee390db21d92d561cd732" id="r_a51b0dae6000ee390db21d92d561cd732"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classamas_1_1AMAS_1_1Alignment.html#a51b0dae6000ee390db21d92d561cd732">missing</a></td></tr>
 <tr class="separator:a51b0dae6000ee390db21d92d561cd732"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeffc72588b2dce9e2cb7f1eaeb475f4d" id="r_aeffc72588b2dce9e2cb7f1eaeb475f4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classamas_1_1AMAS_1_1Alignment.html#aeffc72588b2dce9e2cb7f1eaeb475f4d">check</a></td></tr>
 <tr class="separator:aeffc72588b2dce9e2cb7f1eaeb475f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a34483635e3041ffb04517d1d22806c31" id="r_a34483635e3041ffb04517d1d22806c31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classamas_1_1AMAS_1_1Alignment.html#a34483635e3041ffb04517d1d22806c31">all_matrix_cells</a></td></tr>
+<tr class="separator:a34483635e3041ffb04517d1d22806c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Base class: Gets in parsed sequences as input and summarizes their stats.
@@ -874,10 +878,6 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="AMAS_8py_source.html#l01016">1016</a> of file <a class="el" href="AMAS_8py_source.html">AMAS.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno"> 1016</span>    <span class="keyword">def </span>get_matrix_cells(self):</div>
-<div class="line"><span class="lineno"> 1017</span>        <span class="comment"># count all matrix cells</span></div>
-<div class="line"><span class="lineno"> 1018</span>        self.all_matrix_cells = len(self.parsed_aln.values()) * int(self.length)</div>
-<div class="line"><span class="lineno"> 1019</span>        <span class="keywordflow">return</span> self.all_matrix_cells</div>
-<div class="line"><span class="lineno"> 1020</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1864,11 +1864,19 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">amas.AMAS.Alignment.all_matrix_cells</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="AMAS_8py_source.html#l01018">1018</a> of file <a class="el" href="AMAS_8py_source.html">AMAS.py</a>.</p>

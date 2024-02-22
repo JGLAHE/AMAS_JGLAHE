@@ -1,13 +1,11 @@
 <map id="amas.AMAS.FileParser.translate_ambiguous" name="amas.AMAS.FileParser.translate_ambiguous">
-<area shape="rect" id="Node000001" title=" " alt="" coords="307,113,535,153"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="307,85,535,125"/>
 <area shape="rect" id="Node000002" href="$classamas_1_1AMAS_1_1FileParser.html#ab2c8843201d207275e0d95069cd924e9" title=" " alt="" coords="9,5,255,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="377,108,322,75,258,46,214,33,216,28,260,41,324,70,380,103"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="360,82,258,46,206,33,207,28,259,41,361,77"/>
 <area shape="rect" id="Node000003" href="$classamas_1_1AMAS_1_1FileParser.html#a55d4215e8ff78f2d93225132ed5a9b01" title=" " alt="" coords="27,55,237,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="306,113,233,98,234,93,307,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="292,94,236,89,237,83,293,89"/>
 <area shape="rect" id="Node000004" href="$classamas_1_1AMAS_1_1FileParser.html#a11ca6ff0c8a306a7c2d48e23aa261249" title=" " alt="" coords="6,120,258,145"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="293,135,258,135,258,130,293,130"/>
-<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1FileParser.html#a4d1acfbaaed06f512b1edfa290b1cb12" title=" " alt="" coords="27,170,237,210"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="307,158,234,173,233,167,306,153"/>
-<area shape="rect" id="Node000006" href="$classamas_1_1AMAS_1_1FileParser.html#aef27a175663ef1c0f8338f17b36489d7" title=" " alt="" coords="5,235,259,260"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="380,162,324,195,260,224,216,237,214,232,258,220,322,190,377,158"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="293,120,259,123,258,118,293,114"/>
+<area shape="rect" id="Node000005" href="$classamas_1_1AMAS_1_1FileParser.html#aef27a175663ef1c0f8338f17b36489d7" title=" " alt="" coords="5,169,259,195"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="350,132,259,159,204,172,203,167,258,154,349,127"/>
 </map>

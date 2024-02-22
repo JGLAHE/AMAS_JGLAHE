@@ -8,6 +8,20 @@ var classamas_1_1AMAS_1_1FileParser =
     [ "phylip_interleaved_parse", "classamas_1_1AMAS_1_1FileParser.html#a4d1acfbaaed06f512b1edfa290b1cb12", null ],
     [ "phylip_parse", "classamas_1_1AMAS_1_1FileParser.html#aef27a175663ef1c0f8338f17b36489d7", null ],
     [ "translate_ambiguous", "classamas_1_1AMAS_1_1FileParser.html#a3018704c5d9cc9b88e5660ca114e45a7", null ],
+    [ "chars_match", "classamas_1_1AMAS_1_1FileParser.html#ae4bd470b1296ac1035e9684f93875a5a", null ],
+    [ "counter", "classamas_1_1AMAS_1_1FileParser.html#a5ab8e8e5e9b1ca6b24917f5e5dcc16e0", null ],
     [ "in_file", "classamas_1_1AMAS_1_1FileParser.html#a1b13db9f81b9781479948aeab67d7194", null ],
-    [ "in_file_lines", "classamas_1_1AMAS_1_1FileParser.html#aa24582e2a7d2ca2fc703d85b254e1dd4", null ]
+    [ "in_file_lines", "classamas_1_1AMAS_1_1FileParser.html#aa24582e2a7d2ca2fc703d85b254e1dd4", null ],
+    [ "matches", "classamas_1_1AMAS_1_1FileParser.html#a9686ac61d24d6ec6926db37e0d001289", null ],
+    [ "name_match", "classamas_1_1AMAS_1_1FileParser.html#ab0fc8b774de4480d3d1b63f848d86957", null ],
+    [ "name_matches", "classamas_1_1AMAS_1_1FileParser.html#a5ab1f0e034b668b9ebc60006efd5c173", null ],
+    [ "records", "classamas_1_1AMAS_1_1FileParser.html#a582119673669be3bee4ba48a31e0f72b", null ],
+    [ "seq_match", "classamas_1_1AMAS_1_1FileParser.html#acfeebd4bd4ff1b902f04c75b5245e949", null ],
+    [ "seq_match", "classamas_1_1AMAS_1_1FileParser.html#ac05cd039f05eb11ea22f2154a35896aa", null ],
+    [ "seq_matches", "classamas_1_1AMAS_1_1FileParser.html#af5285bac650eadb7566ba04ca353f076", null ],
+    [ "sequence", "classamas_1_1AMAS_1_1FileParser.html#a75b8ad58c96835b486b9189b4e4cf203", null ],
+    [ "sequences", "classamas_1_1AMAS_1_1FileParser.html#a0c4d861af21c955044a182e94eef4de6", null ],
+    [ "tax_chars_matches", "classamas_1_1AMAS_1_1FileParser.html#a87a1c8e3b60563b8f25f3bb8944336a8", null ],
+    [ "tax_match", "classamas_1_1AMAS_1_1FileParser.html#ad9b76b14b6eb1f81542d968b48ee442e", null ],
+    [ "taxa", "classamas_1_1AMAS_1_1FileParser.html#abf2d850bab56edd239d62f11fa11bd8c", null ]
 ];
