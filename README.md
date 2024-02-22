@@ -159,7 +159,7 @@ If this was the `partitions.txt` file from the example command above, `AMAS` wou
 
 Sometimes after splitting you will have alignments with taxa that have only gaps `-` or missing data `?`. If you want to these to not be included in the output , add `-j` or `--remove-empty` to the command line.
 
-Partition files are parsed with `AMAS.FileParser.partition_parse()`, which in the JGLAHE fork of AMAS looks like this:
+Partition files are parsed with the method `AMAS.FileParser.partition_parse()`; in the JGLAHE fork of AMAS, the updated parts of this method are shown below:
 ```
 def partitions_parse(self):
     # parse partitions file using regex
@@ -180,17 +180,9 @@ def partitions_parse(self):
         self.in_file_lines,
         re.MULTILINE | re.VERBOSE
     )
-
-    # initiate list to store dictionaries with lists
-    # of slice positions as values
-    partitions = []
-    add_to_partitions = partitions.append
-
+    ...
     for match in matches:
-        # initiate dictionary of partition name as key
-        dict_of_dicts = {}
-        # and list of dictionaries with slice positions
-        list_of_dicts = []
+        ...
         add_to_list_of_dicts = list_of_dicts.append
         # get parition name and numbers from parsed partition strings
         partition_name = match.group('partition_name')
@@ -213,30 +205,11 @@ def partitions_parse(self):
             else:
                 pos_dict["start"] = int(position) - 1
                 pos_dict["stop"] = int(position)
-    
-            if "\\" in position:
-                # Note: the value of `N` in `...\N` isn't read: the script simply assumes `N` is consistent with the number of
-                # increments per interval when the alignment is parsed with a stride of 3 (designating each cpos).
-                # E.g. For the partition file:
-                #       ...`1-N\2`
-                #       ...`2-N\2`
-                #       ...`(N+1)-M\2`
-                #       ...`(N+2)-M\2`
-                # 3'cpos are ignored due to the absence of intervals `3-N...`, `(N+3)-M...`, not because the associated stride values are`\2`
-                pos_dict["stride"] = 3
-            elif "\\" not in position:
-                pos_dict["stride"] = 1
-
-            add_to_list_of_dicts(pos_dict)
-
-        dict_of_dicts[partition_name] = list_of_dicts
-        add_to_partitions(dict_of_dicts)
-
-    return partitions
+            ...
 ```
-This version removes some of the partition formatting restrictions of the original AMAS repo version, with the updated partitions_parse() method facilitating the uses of native RAxML(-NG) and IQ-TREE2 partition files.
+This version removes some of the partition formatting restrictions of the original AMAS repo version, allowing AMAS to parse unmodified RAxML(-NG) and IQ-TREE2 partition files.
 
-The following is a contrived example to demonstrate this, along with the updated `metapartions` command. Consider the following superalignment `concat.fas`:
+The following contrived example demonstrates this using the updated `metapartions` command. Consider the following superalignment `concat.fas`:
 ```
 >S01
 CCCCCTGGCGCCGCCGCCGCCCCTCCTCCTCCTCCTCCCCCCCCC
@@ -301,7 +274,7 @@ AACAAGTTATCATAATAATAAAAGAAGAAGAAGAAGAAAAAAAAA
 >S31
 CCCCCGTTCTCCTCCTCCTCCCCGCCGCCGCCGCCGCCCCCCCCC
 ```
-Its partition file `partitions.txt` contain various formatting challenges to test the parser, but it includes the basic directives found in native RAxML(-NG) and IQ-TREE2 partition files:
+Its partition file `partitions.txt` is formatted to test parser, and includes both RAxML(-NG) and IQ-TREE2 style partitions.
 ```
 charset @@(partition_A_pos1) =      7 - 21\3       
   charset %s = 8  -21\3
@@ -317,7 +290,7 @@ p1_3_a                 = 3-6\3             24 -      36\3
     9.20b: partition_D_pos1;
 end;
 ```
-While most of the partitions here are not contiguous with respect to the `concat.fas`, this superalignment can be converted into one with contiguous metapartitons by running the command:
+Most partitions here aren't contiguous, however the `metapartitions` command can be used to convert `concat.fas` into a form where these partition *are* contiguous:
 ```
 ./AMAS.py metapartitions -i concat.fas -f fasta -d dna --no-san --no-mpan -l partitions.txt -t concat.out.fas`
 ```
