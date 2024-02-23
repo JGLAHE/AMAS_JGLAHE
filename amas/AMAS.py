@@ -737,9 +737,9 @@ class FileParser:
                 (
                  (?P<nexus>charset[ ]+)              # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
                  |
-                 (?P<raxml>[A-Za-z0-9_+\.]+,[ \t]+)  # case 2: RAxML/RAxML-NG model(+other pars); partition name
+                 (?P<raxml>[A-Za-z0-9_+.\{\}\/\?-]+,[ \t]+)  # case 2: RAxML/RAxML-NG model(+other pars); partition name
                 )?
-                (?P<partition_name>[A-Za-z0-9_&-]+)  # partition name (accepts `&` and `-`; other metacharacter may cause problems in filenames)
+                (?P<partition_name>[A-Za-z0-9_&.-]+)        # partition name; alt(?P<partition_name>[A-Za-z0-9_&.\(\)\[\]-]+)
                 [ ]*=[ ]*                            # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
                 (?P<numbers>[\\0-9, -]+)             # position ranges w/ stride (multiple intervals; from original regex)
                 (?P<nexus_term>[ ]*[;])?             # whitespace-prepended (or unprepended) ';' (nexus terminator)
