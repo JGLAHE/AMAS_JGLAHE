@@ -58,11 +58,11 @@ The AMAS commands are:
   convert           Convert to other file format.
   replicate         Create replicate data sets for phylogenetic jackknife.
   split             Split alignment according to a partitions file.
+  metapartitions    Runs `split` and concatenates the output.
   summary           Write alignment summary.
   remove            Remove taxa from alignment.
   translate         Translate DNA alignment into protein alignment.
   trim              Remove columns from alignment.
-  metapartitions    Runs `split` and concatenates the output.
 
 
 Use AMAS <command> -h for help with arguments of the command of interest
@@ -733,16 +733,16 @@ class FileParser:
         # original: `matches = re.finditer(r"^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)", self.in_file_lines, re.MULTILINE)`
         # new version: more permissive -> handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files
         matches = re.finditer(
-            r"""^[ \t]*                                     # start of line w/ zero-or-more (just) whitespaces/tabs
+            r"""^[ \t]*                                     # start line w/ 0+ whitespaces/tabs
                 (
-                 (?P<nexus>charset[ ]+)                     # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
+                 (?P<nexus>charset[ ]+)                     # <1>: best_scheme.nex partition directive
                  |
-                 (?P<raxml>[A-Za-z0-9_+.\{\}\/\?-]+,[ \t]+) # case 2: RAxML/RAxML-NG model(+other pars); partition name
+                 (?P<raxml>[A-Za-z0-9_+.\{\}\/-]+,[ \t]+)   # <2>: RAxML(-NG) model(+pars)
                 )?
-                (?P<partition_name>[A-Za-z0-9_&.-]+)        # partition name; alt(?P<partition_name>[A-Za-z0-9_&.\(\)\[\]-]+)
-                [ ]*=[ ]*                                   # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
-                (?P<numbers>[\\0-9, -]+)                    # position ranges w/ stride (multiple intervals; from original regex)
-                (?P<nexus_term>[ ]*[;])?                    # whitespace-prepended (or unprepended) ';' (nexus terminator)
+                (?P<partition_name>[A-Za-z0-9_&.-]+)        # partition name
+                [ ]*=[ ]*                                   # whitespace-(un)padded '='
+                (?P<numbers>[\\0-9, -]+)                    # position ranges w/stride (multiple intervals)
+                (?P<nexus_term>[ ]*[;])?                    # whitespace-(un)prepended ';' (nexus terminator)
             """,
             self.in_file_lines,
             re.MULTILINE | re.VERBOSE
@@ -1772,7 +1772,9 @@ class MetaAlignment:
             alignment_name = self.alignment_objects[partition_counter - 1].get_name().split('.')[0]
 
             if self.using_metapartitions:
-                # implementation of option --no-mpan; option --prepend(-label) will assign a string or "" (see class definition)
+                #  Implementation of `--no-mpan`, i.e. 'no metapartition alignment name'.
+                #  `prepend_label` either assigned to `<str>_` via option `--prepend <str>`
+                #  or empty ("") -> see def MetaAlignment.__init__()
                 if self.no_mpan:
                     # omit original alignment names from the printed partition file
                     partition_name = self.prepend_label + "p" + str(partition_counter).zfill(digits_to_pad)
@@ -2366,24 +2368,23 @@ def main():
 
     if meta_aln.command == "summary":
         meta_aln.write_summaries(kwargs["summary_out"])
+
     if meta_aln.by_taxon_summary:
         print("Printing taxon summaries")
         meta_aln.write_taxa_summaries()
+
     if meta_aln.command == "convert":
         meta_aln.write_out("convert", kwargs["out_format"])
+
     if meta_aln.command == "concat":
         meta_aln.write_out("concat", kwargs["out_format"])
         meta_aln.write_partitions(kwargs["concat_part"], kwargs["part_format"], kwargs["data_type"], kwargs["codons"])
+
     if meta_aln.command == "replicate":
         meta_aln.write_out("replicate", kwargs["out_format"])
+
     if meta_aln.command == "split":
         meta_aln.write_out("split", kwargs["out_format"])
-    if meta_aln.command == "remove":
-        meta_aln.write_out("remove", kwargs["out_format"])
-    if meta_aln.command == "translate":
-        meta_aln.write_out("translate", kwargs["out_format"])
-    if meta_aln.command == "trim":
-        meta_aln.write_out("trim", kwargs["out_format"])
 
     if meta_aln.command == "metapartitions":
         # `metapartitions` is essentially `split` + `concat`. Currently you can't set an out_format:
@@ -2394,6 +2395,15 @@ def main():
         # through MetaAlignment.get_alignment_object(alignment, self.in_format, self.data_type)
         meta_aln.write_out("metapartitions", kwargs["in_format"])
         meta_aln.write_partitions(kwargs["concat_part"], kwargs["part_format"], kwargs["data_type"], "none")
+
+    if meta_aln.command == "remove":
+        meta_aln.write_out("remove", kwargs["out_format"])
+
+    if meta_aln.command == "translate":
+        meta_aln.write_out("translate", kwargs["out_format"])
+
+    if meta_aln.command == "trim":
+        meta_aln.write_out("trim", kwargs["out_format"])
 
         # meta_aln.write_out("translate", kwargs["out_format"])
 
