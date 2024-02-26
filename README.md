@@ -164,20 +164,20 @@ Sometimes after splitting you will have alignments with taxa that have only gaps
 `split` and `metapartitions` parse partition files with `AMAS.FileParser.partition_parse()`. This method has been updated in the AMAS_JGLAHE fork to recognize common configurations of RAxML(-NG) and IQ-TREE2 partitions files using the regex:
 ```
 matches = re.finditer(
-            r"""^[ \t]*                                     # start of line w/ zero-or-more (just) whitespaces/tabs
-                (
-                 (?P<nexus>charset[ ]+)                     # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name
-                 |
-                 (?P<raxml>[A-Za-z0-9_+.\{\}\/-]+,[ \t]+) # case 2: RAxML/RAxML-NG model(+other pars); partition name
-                )?
-                (?P<partition_name>[A-Za-z0-9_&.-]+)        # partition name; alt(?P<partition_name>[A-Za-z0-9_&.\(\)\[\]-]+)
-                [ ]*=[ ]*                                   # whitespace-padded (or unpadded) '=': (IQ-TREE 2)best_scheme.nex compatabiliy
-                (?P<numbers>[\\0-9, -]+)                    # position ranges w/ stride (multiple intervals; from original regex)
-                (?P<nexus_term>[ ]*[;])?                    # whitespace-prepended (or unprepended) ';' (nexus terminator)
-            """,
-            self.in_file_lines,
-            re.MULTILINE | re.VERBOSE
-        )
+    r"""^[ \t]*                                     # start line w/ 0+ whitespaces/tabs
+        (
+         (?P<nexus>charset[ ]+)                     # <1>: best_scheme.nex partition directive
+         |
+         (?P<raxml>[A-Za-z0-9_+.\{\}\/-]+,[ \t]+)   # <2>: RAxML(-NG) model(+pars)
+        )?
+        (?P<partition_name>[A-Za-z0-9_&.-]+)        # partition name
+        [ ]*=[ ]*                                   # whitespace-(un)padded '='
+        (?P<numbers>[\\0-9, -]+)                    # position ranges w/stride (multiple intervals)
+        (?P<nexus_term>[ ]*[;])?                    # whitespace-(un)prepended ';' (nexus terminator)
+    """,
+    self.in_file_lines,
+    re.MULTILINE | re.VERBOSE
+)
 ```
  This generally handles RAxML(-NG) and IQ-TREE2 partition files correctly, with the following caveats:
 - It doesn't recognize filenames after '=', so you can't a partition file that maps to multiple alignments, e.g.
@@ -190,7 +190,7 @@ begin sets;
     charpartition mine = HKY:part1, GTR+G:part2, WAG+I+G:part3;
 end
 ```
-- The capture groups `<raxml>` and `<partition_name>` aim to be comprehensive, but note that unmatched edge-cases will fail silently. This includes model specification based on the full 'MULTISTATE' [datatype](https://github.com/amkozlov/raxml-ng/wiki/Input-data#user-defined-state-encoding), as well as partition names containing metacharacter other than `&`, `.`, and `-` (see next point).
+- The capture groups `<raxml>` and `<partition_name>` aim to be comprehensive, but note that unmatched edge-cases will fail silently. This includes model specification based on the full 'MULTISTATE' [datatype](https://github.com/amkozlov/raxml-ng/wiki/Input-data#state-encoding--order), as well as partition names containing metacharacter other than `&`, `.`, and `-` (see next point).
 
 - Literal-metacharacter matching is now refined by capture group with explicit character class declarations. Metacharacters may be unavoidable when specifying complex models, but users should be aware that certain metacharacter pattern in *partition names* could lead to unexpected results, depending on the environment. `split` and `metapartitions` use unsanitized partition names as the (sub)alignment filenames, potentially leading to shell execution of filenames as command sequences in the context of a pipeline or wrapper script. For this reason, and because this script doesn't support the full 'MULTISTATE' datatype, the characters `$`, `(`, `)`, `*`, `` ` ` ``, `?`, `!`, `<` and `>` are excluded from the regex entirely.
 
@@ -206,7 +206,7 @@ The following is a contrived example (for brevity) demonstrating how the `metapa
 The above command takes the input superalignment `concat.fas` of `dna` data in `fasta` format and splits it based on `partitions.txt`, writing the collated partitions to subalignment files named after the corresponding partiton names, where the `--no-san` flag prevents the label 'concat_' (from the input superalignment filename) from being prepended to these filenames; subalignment files are then concatenated into the new superalignment `concat.out.fas`, writing its contiguous partitions to the file `defrag_partitions.txt` in the RAxML(-NG) format based on `-y raxml`, with `--prepend Nuc_defrag` prepending the label 'Nuc_defrag_' to each of these partition names.
 
 ![metapartitions_alncomp](https://github.com/JGLAHE/AMAS_JGLAHE/assets/86393993/7e9bc899-52ba-4205-bc46-9e554e533f24)
-Figure: [concat.fas](docs/README_assets/concat.fas) (left), is converted into [concat.out.fas](docs/README_assets/concat.out.fas) (right) with the `metapartitions` command; visualized in [Aliview](https://github.com/AliView/AliView) v1.28
+Figure: [concat.fas](docs/README_assets/concat.fas) (left) converted to [concat.out.fas](docs/README_assets/concat.out.fas) (right) with `metapartitions` command; visualized in [Aliview](https://github.com/AliView/AliView) v1.28
 
 The `concat.fas` partition file `partitions.txt` is shown below. This includes loosely conforming examples of the three partition formatting types recognized by AMAS (the AMAS-default, RAxML(-NG)and IQ-TREE2-Nexus), which serves to demonstrate the tolerances the updated parser's regex. Note that the lack of '=' in IQ-TREE2-Nexus model specifications (as used in .best_scheme.nex and .best_model.nex files) means these lines are safely ignored.
 ```
@@ -252,7 +252,7 @@ The command from the above example should generate 12 files: the new superalignm
 |- partition_D_pos2-meta.fas
 |- s&-meta.fas
 ```
-You can try running this with the AMAS_JGLAHE fork yourself using [concat.fas](docs/README_assets/concat.fas), checking the result against [concat.out.fas](docs/README_assets/concat.out.fas) and [defrag_partitions.txt](docs/README_assets/defrag_partitions.txt).
+You can test this with the AMAS_JGLAHE fork using [concat.fas](docs/README_assets/concat.fas), checking the result against [concat.out.fas](docs/README_assets/concat.out.fas) and [defrag_partitions.txt](docs/README_assets/defrag_partitions.txt).
 
 ### Translating a DNA alignment into aligned protein sequences
 You can translate a nucleotide alignment to amino acids with AMAS using one of the [NCBI translation tables](http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi). For example, to correctly translate an insect mitochondrial gene alignment that begins at a second codon position:
