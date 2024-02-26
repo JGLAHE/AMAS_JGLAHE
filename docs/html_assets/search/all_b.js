@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['name_5fmatch_0',['name_match',['../classamas_1_1AMAS_1_1FileParser.html#ab0fc8b774de4480d3d1b63f848d86957',1,'amas::AMAS::FileParser']]],
-  ['name_5fmatches_1',['name_matches',['../classamas_1_1AMAS_1_1FileParser.html#a5ab1f0e034b668b9ebc60006efd5c173',1,'amas::AMAS::FileParser']]],
-  ['natural_5fsort_2',['natural_sort',['../classamas_1_1AMAS_1_1MetaAlignment.html#ab8545c7b822d08b52ad60219cf7331be',1,'amas::AMAS::MetaAlignment']]],
-  ['nexus_5finterleaved_5fparse_3',['nexus_interleaved_parse',['../classamas_1_1AMAS_1_1FileParser.html#a55d4215e8ff78f2d93225132ed5a9b01',1,'amas::AMAS::FileParser']]],
-  ['nexus_5fparse_4',['nexus_parse',['../classamas_1_1AMAS_1_1FileParser.html#a11ca6ff0c8a306a7c2d48e23aa261249',1,'amas::AMAS::FileParser']]],
-  ['no_5floci_5',['no_loci',['../classamas_1_1AMAS_1_1MetaAlignment.html#a75f29728bfe3549f528aad4c462d9072',1,'amas::AMAS::MetaAlignment']]],
-  ['no_5fmissing_5fambiguous_6',['no_missing_ambiguous',['../classamas_1_1AMAS_1_1Alignment.html#a707af475b6e6335bc951d841e3f0c579',1,'amas::AMAS::Alignment']]],
-  ['no_5fmpan_7',['no_mpan',['../classamas_1_1AMAS_1_1MetaAlignment.html#ad18edeba97ae18af610280c4d7706eec',1,'amas::AMAS::MetaAlignment']]],
-  ['no_5freplicates_8',['no_replicates',['../classamas_1_1AMAS_1_1MetaAlignment.html#a4033bb3f71ec9025180b90105bcfe2e5',1,'amas::AMAS::MetaAlignment']]],
-  ['no_5fsup_5faln_5fname_9',['no_sup_aln_name',['../classamas_1_1AMAS_1_1MetaAlignment.html#a7fef6daf1bd99bf849881499ae2b7655',1,'amas::AMAS::MetaAlignment']]],
-  ['non_5falphabet_10',['non_alphabet',['../classamas_1_1AMAS_1_1AminoAcidAlignment.html#a50ab58044e58e8ecdee0db2fa9eaad70',1,'amas.AMAS.AminoAcidAlignment.non_alphabet'],['../classamas_1_1AMAS_1_1DNAAlignment.html#af765881aea2e771e8aed179ea59cb086',1,'amas.AMAS.DNAAlignment.non_alphabet']]]
+  ['main_0',['main',['../namespaceamas_1_1AMAS.html#a5fe17c172857ea2136794f32cfcbcc50',1,'amas::AMAS']]],
+  ['matches_1',['matches',['../classamas_1_1AMAS_1_1FileParser.html#a9686ac61d24d6ec6926db37e0d001289',1,'amas::AMAS::FileParser']]],
+  ['matrix_2',['matrix',['../classamas_1_1AMAS_1_1Alignment.html#a8f4f61093864b014dc063711522bf6ee',1,'amas::AMAS::Alignment']]],
+  ['matrix_5fcreator_3',['matrix_creator',['../classamas_1_1AMAS_1_1Alignment.html#a1f9483abca9c1883d1f450257d04d035',1,'amas::AMAS::Alignment']]],
+  ['metaalignment_4',['MetaAlignment',['../classamas_1_1AMAS_1_1MetaAlignment.html',1,'amas::AMAS']]],
+  ['metapartitions_5',['metapartitions',['../classamas_1_1AMAS_1_1ParsedArgs.html#a78f9cad384c42cc3db304e5b14fc8c03',1,'amas::AMAS::ParsedArgs']]],
+  ['missing_6',['missing',['../classamas_1_1AMAS_1_1Alignment.html#a51b0dae6000ee390db21d92d561cd732',1,'amas::AMAS::Alignment']]],
+  ['missing_5fambiguous_5fchars_7',['missing_ambiguous_chars',['../classamas_1_1AMAS_1_1AminoAcidAlignment.html#a2f05458b86d99cde8eab6bbb9a0de0ca',1,'amas.AMAS.AminoAcidAlignment.missing_ambiguous_chars'],['../classamas_1_1AMAS_1_1DNAAlignment.html#a3359266b12a23b9d9368fe5d0f76ff7b',1,'amas.AMAS.DNAAlignment.missing_ambiguous_chars']]],
+  ['missing_5fchars_8',['missing_chars',['../classamas_1_1AMAS_1_1AminoAcidAlignment.html#a7ce6543e724d7c60791b9631ad3705e8',1,'amas.AMAS.AminoAcidAlignment.missing_chars'],['../classamas_1_1AMAS_1_1DNAAlignment.html#a045198c948623725611a7dceb989e005',1,'amas.AMAS.DNAAlignment.missing_chars']]],
+  ['missing_5frecords_9',['missing_records',['../classamas_1_1AMAS_1_1Alignment.html#ac5dd4f423f94235319e4cf7745acf3a7',1,'amas::AMAS::Alignment']]],
+  ['module_10',['AMAS as a Python module',['../index.html#autotoc_md16',1,'']]]
 ];

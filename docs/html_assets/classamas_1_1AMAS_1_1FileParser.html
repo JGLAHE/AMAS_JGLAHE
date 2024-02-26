@@ -396,16 +396,16 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  733</span>        <span class="comment"># original: `matches = re.finditer(r&quot;^(\s+)?([^ =]+)[ =]+([\\0-9, -]+)&quot;, self.in_file_lines, re.MULTILINE)`</span></div>
 <div class="line"><span class="lineno">  734</span>        <span class="comment"># new version: more permissive -&gt; handles PartionFinder/RAxML/(IQ-TREE 2)best_scheme.nex format partition files</span></div>
 <div class="line"><span class="lineno">  735</span>        matches = re.finditer(</div>
-<div class="line"><span class="lineno">  736</span>            <span class="stringliteral">r&quot;&quot;&quot;^[ \t]*                                 # start of line w/ zero-or-more (just) whitespaces/tabs</span></div>
+<div class="line"><span class="lineno">  736</span>            <span class="stringliteral">r&quot;&quot;&quot;^[ \t]*                                     # start line w/ 0+ whitespaces/tabs</span></div>
 <div class="line"><span class="lineno">  737</span><span class="stringliteral">                (</span></div>
-<div class="line"><span class="lineno">  738</span><span class="stringliteral">                 (?P&lt;nexus&gt;charset[ ]+)                 # case 1: (IQ-TREE 2)best_scheme.nex partition directive; partition name</span></div>
+<div class="line"><span class="lineno">  738</span><span class="stringliteral">                 (?P&lt;nexus&gt;charset[ ]+)                     # &lt;1&gt;: best_scheme.nex partition directive</span></div>
 <div class="line"><span class="lineno">  739</span><span class="stringliteral">                 |</span></div>
-<div class="line"><span class="lineno">  740</span><span class="stringliteral">                 (?P&lt;raxml&gt;[A-Za-z0-9_+\.]+,[ \t]+)     # case 2: RAxML/RAxML-NG model(+other pars); partition name</span></div>
+<div class="line"><span class="lineno">  740</span><span class="stringliteral">                 (?P&lt;raxml&gt;[A-Za-z0-9_+.\{\}\/-]+,[ \t]+)   # &lt;2&gt;: RAxML(-NG) model(+pars)</span></div>
 <div class="line"><span class="lineno">  741</span><span class="stringliteral">                )?</span></div>
-<div class="line"><span class="lineno">  742</span><span class="stringliteral">                (?P&lt;partition_name&gt;[A-Za-z0-9_@*&amp;()\[\]{}&#39;&quot;%#|-]+) # partition name (handles various metcharacters, excludes [\s],&lt;&gt;?/:;~`\^$!)</span></div>
-<div class="line"><span class="lineno">  743</span><span class="stringliteral">                [ ]*=[ ]*                               # whitespace-padded (or unpadded) &#39;=&#39;: (IQ-TREE 2)best_scheme.nex compatabiliy</span></div>
-<div class="line"><span class="lineno">  744</span><span class="stringliteral">                (?P&lt;numbers&gt;[\\0-9, -]+)                # position ranges w/ stride (multiple intervals; from original regex)</span></div>
-<div class="line"><span class="lineno">  745</span><span class="stringliteral">                (?P&lt;nexus_term&gt;[ ]*[;])?                # whitespace-prepended (or unprepended) &#39;;&#39; (nexus terminator)</span></div>
+<div class="line"><span class="lineno">  742</span><span class="stringliteral">                (?P&lt;partition_name&gt;[A-Za-z0-9_&amp;.-]+)        # partition name</span></div>
+<div class="line"><span class="lineno">  743</span><span class="stringliteral">                [ ]*=[ ]*                                   # whitespace-(un)padded &#39;=&#39;</span></div>
+<div class="line"><span class="lineno">  744</span><span class="stringliteral">                (?P&lt;numbers&gt;[\\0-9, -]+)                    # position ranges w/stride (multiple intervals)</span></div>
+<div class="line"><span class="lineno">  745</span><span class="stringliteral">                (?P&lt;nexus_term&gt;[ ]*[;])?                    # whitespace-(un)prepended &#39;;&#39; (nexus terminator)</span></div>
 <div class="line"><span class="lineno">  746</span><span class="stringliteral">            &quot;&quot;&quot;</span>,</div>
 <div class="line"><span class="lineno">  747</span>            self.in_file_lines,</div>
 <div class="line"><span class="lineno">  748</span>            re.MULTILINE | re.VERBOSE</div>

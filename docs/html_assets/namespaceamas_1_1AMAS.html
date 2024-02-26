@@ -149,50 +149,58 @@ and counts of all characters present in the relevant (nucleotide or amino acid) 
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AMAS_8py_source.html#l02361">2361</a> of file <a class="el" href="AMAS_8py_source.html">AMAS.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 2361</span><span class="keyword">def </span>main():</div>
-<div class="line"><span class="lineno"> 2362</span> </div>
-<div class="line"><span class="lineno"> 2363</span>    <span class="comment"># initialize parsed arguments and meta alignment objects</span></div>
-<div class="line"><span class="lineno"> 2364</span>    kwargs = run()</div>
-<div class="line"><span class="lineno"> 2365</span>    meta_aln = MetaAlignment(**kwargs)</div>
-<div class="line"><span class="lineno"> 2366</span> </div>
-<div class="line"><span class="lineno"> 2367</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;summary&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2368</span>        meta_aln.write_summaries(kwargs[<span class="stringliteral">&quot;summary_out&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2369</span>    <span class="keywordflow">if</span> meta_aln.by_taxon_summary:</div>
-<div class="line"><span class="lineno"> 2370</span>        print(<span class="stringliteral">&quot;Printing taxon summaries&quot;</span>)</div>
-<div class="line"><span class="lineno"> 2371</span>        meta_aln.write_taxa_summaries()</div>
-<div class="line"><span class="lineno"> 2372</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;convert&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2373</span>        meta_aln.write_out(<span class="stringliteral">&quot;convert&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2374</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;concat&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2375</span>        meta_aln.write_out(<span class="stringliteral">&quot;concat&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2376</span>        meta_aln.write_partitions(kwargs[<span class="stringliteral">&quot;concat_part&quot;</span>], kwargs[<span class="stringliteral">&quot;part_format&quot;</span>], kwargs[<span class="stringliteral">&quot;data_type&quot;</span>], kwargs[<span class="stringliteral">&quot;codons&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2377</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;replicate&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2378</span>        meta_aln.write_out(<span class="stringliteral">&quot;replicate&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2379</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;split&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2380</span>        meta_aln.write_out(<span class="stringliteral">&quot;split&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2381</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;remove&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2382</span>        meta_aln.write_out(<span class="stringliteral">&quot;remove&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2383</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;translate&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2384</span>        meta_aln.write_out(<span class="stringliteral">&quot;translate&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2385</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;trim&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2386</span>        meta_aln.write_out(<span class="stringliteral">&quot;trim&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2387</span> </div>
-<div class="line"><span class="lineno"> 2388</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;metapartitions&quot;</span>:</div>
-<div class="line"><span class="lineno"> 2389</span>        <span class="comment"># `metapartitions` is essentially `split` + `concat`. Currently you can&#39;t set an out_format:</span></div>
-<div class="line"><span class="lineno"> 2390</span>        <span class="comment"># it&#39;s automatically set to match the in_format because the intermediate `split` outputs become</span></div>
-<div class="line"><span class="lineno"> 2391</span>        <span class="comment"># the &#39;new&#39; in_files for the `concat` operation, and then calling either:</span></div>
-<div class="line"><span class="lineno"> 2392</span>        <span class="comment">#  -&gt; AminoAcidAlignment(Alignment.__init__(self, in_file, in_format, data_type))</span></div>
-<div class="line"><span class="lineno"> 2393</span>        <span class="comment">#  -&gt; DNAAlignment(Alignment.__init__(self, in_file, in_format, data_type))</span></div>
-<div class="line"><span class="lineno"> 2394</span>        <span class="comment"># through MetaAlignment.get_alignment_object(alignment, self.in_format, self.data_type)</span></div>
-<div class="line"><span class="lineno"> 2395</span>        meta_aln.write_out(<span class="stringliteral">&quot;metapartitions&quot;</span>, kwargs[<span class="stringliteral">&quot;in_format&quot;</span>])</div>
-<div class="line"><span class="lineno"> 2396</span>        meta_aln.write_partitions(kwargs[<span class="stringliteral">&quot;concat_part&quot;</span>], kwargs[<span class="stringliteral">&quot;part_format&quot;</span>], kwargs[<span class="stringliteral">&quot;data_type&quot;</span>], <span class="stringliteral">&quot;none&quot;</span>)</div>
-<div class="line"><span class="lineno"> 2397</span> </div>
-<div class="line"><span class="lineno"> 2398</span>        <span class="comment"># meta_aln.write_out(&quot;translate&quot;, kwargs[&quot;out_format&quot;])</span></div>
-<div class="line"><span class="lineno"> 2399</span> </div>
+<p class="definition">Definition at line <a class="el" href="AMAS_8py_source.html#l02363">2363</a> of file <a class="el" href="AMAS_8py_source.html">AMAS.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 2363</span><span class="keyword">def </span>main():</div>
+<div class="line"><span class="lineno"> 2364</span> </div>
+<div class="line"><span class="lineno"> 2365</span>    <span class="comment"># initialize parsed arguments and meta alignment objects</span></div>
+<div class="line"><span class="lineno"> 2366</span>    kwargs = run()</div>
+<div class="line"><span class="lineno"> 2367</span>    meta_aln = MetaAlignment(**kwargs)</div>
+<div class="line"><span class="lineno"> 2368</span> </div>
+<div class="line"><span class="lineno"> 2369</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;summary&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2370</span>        meta_aln.write_summaries(kwargs[<span class="stringliteral">&quot;summary_out&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2371</span> </div>
+<div class="line"><span class="lineno"> 2372</span>    <span class="keywordflow">if</span> meta_aln.by_taxon_summary:</div>
+<div class="line"><span class="lineno"> 2373</span>        print(<span class="stringliteral">&quot;Printing taxon summaries&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2374</span>        meta_aln.write_taxa_summaries()</div>
+<div class="line"><span class="lineno"> 2375</span> </div>
+<div class="line"><span class="lineno"> 2376</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;convert&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2377</span>        meta_aln.write_out(<span class="stringliteral">&quot;convert&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2378</span> </div>
+<div class="line"><span class="lineno"> 2379</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;concat&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2380</span>        meta_aln.write_out(<span class="stringliteral">&quot;concat&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2381</span>        meta_aln.write_partitions(kwargs[<span class="stringliteral">&quot;concat_part&quot;</span>], kwargs[<span class="stringliteral">&quot;part_format&quot;</span>], kwargs[<span class="stringliteral">&quot;data_type&quot;</span>], kwargs[<span class="stringliteral">&quot;codons&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2382</span> </div>
+<div class="line"><span class="lineno"> 2383</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;replicate&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2384</span>        meta_aln.write_out(<span class="stringliteral">&quot;replicate&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2385</span> </div>
+<div class="line"><span class="lineno"> 2386</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;split&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2387</span>        meta_aln.write_out(<span class="stringliteral">&quot;split&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2388</span> </div>
+<div class="line"><span class="lineno"> 2389</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;metapartitions&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2390</span>        <span class="comment"># `metapartitions` is essentially `split` + `concat`. Currently you can&#39;t set an out_format:</span></div>
+<div class="line"><span class="lineno"> 2391</span>        <span class="comment"># it&#39;s automatically set to match the in_format because the intermediate `split` outputs become</span></div>
+<div class="line"><span class="lineno"> 2392</span>        <span class="comment"># the &#39;new&#39; in_files for the `concat` operation, and then calling either:</span></div>
+<div class="line"><span class="lineno"> 2393</span>        <span class="comment">#  -&gt; AminoAcidAlignment(Alignment.__init__(self, in_file, in_format, data_type))</span></div>
+<div class="line"><span class="lineno"> 2394</span>        <span class="comment">#  -&gt; DNAAlignment(Alignment.__init__(self, in_file, in_format, data_type))</span></div>
+<div class="line"><span class="lineno"> 2395</span>        <span class="comment"># through MetaAlignment.get_alignment_object(alignment, self.in_format, self.data_type)</span></div>
+<div class="line"><span class="lineno"> 2396</span>        meta_aln.write_out(<span class="stringliteral">&quot;metapartitions&quot;</span>, kwargs[<span class="stringliteral">&quot;in_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2397</span>        meta_aln.write_partitions(kwargs[<span class="stringliteral">&quot;concat_part&quot;</span>], kwargs[<span class="stringliteral">&quot;part_format&quot;</span>], kwargs[<span class="stringliteral">&quot;data_type&quot;</span>], <span class="stringliteral">&quot;none&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2398</span> </div>
+<div class="line"><span class="lineno"> 2399</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;remove&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2400</span>        meta_aln.write_out(<span class="stringliteral">&quot;remove&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2401</span> </div>
+<div class="line"><span class="lineno"> 2402</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;translate&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2403</span>        meta_aln.write_out(<span class="stringliteral">&quot;translate&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2404</span> </div>
+<div class="line"><span class="lineno"> 2405</span>    <span class="keywordflow">if</span> meta_aln.command == <span class="stringliteral">&quot;trim&quot;</span>:</div>
+<div class="line"><span class="lineno"> 2406</span>        meta_aln.write_out(<span class="stringliteral">&quot;trim&quot;</span>, kwargs[<span class="stringliteral">&quot;out_format&quot;</span>])</div>
+<div class="line"><span class="lineno"> 2407</span> </div>
+<div class="line"><span class="lineno"> 2408</span>        <span class="comment"># meta_aln.write_out(&quot;translate&quot;, kwargs[&quot;out_format&quot;])</span></div>
+<div class="line"><span class="lineno"> 2409</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="AMAS_8py_source.html#l02400">amas.AMAS.run()</a>.</p>
+<p class="reference">References <a class="el" href="AMAS_8py_source.html#l02410">amas.AMAS.run()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="AMAS_8py_source.html#l02400">amas.AMAS.run()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="AMAS_8py_source.html#l02410">amas.AMAS.run()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -260,19 +268,19 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AMAS_8py_source.html#l02400">2400</a> of file <a class="el" href="AMAS_8py_source.html">AMAS.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 2400</span><span class="keyword">def </span>run():</div>
-<div class="line"><span class="lineno"> 2401</span> </div>
-<div class="line"><span class="lineno"> 2402</span>    <span class="comment"># initialize parsed arguments</span></div>
-<div class="line"><span class="lineno"> 2403</span>    config = ParsedArgs()</div>
-<div class="line"><span class="lineno"> 2404</span>    <span class="comment"># get arguments</span></div>
-<div class="line"><span class="lineno"> 2405</span>    config_dict = config.get_args_dict()</div>
-<div class="line"><span class="lineno"> 2406</span>    <span class="keywordflow">return</span> config_dict</div>
-<div class="line"><span class="lineno"> 2407</span> </div>
+<p class="definition">Definition at line <a class="el" href="AMAS_8py_source.html#l02410">2410</a> of file <a class="el" href="AMAS_8py_source.html">AMAS.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 2410</span><span class="keyword">def </span>run():</div>
+<div class="line"><span class="lineno"> 2411</span> </div>
+<div class="line"><span class="lineno"> 2412</span>    <span class="comment"># initialize parsed arguments</span></div>
+<div class="line"><span class="lineno"> 2413</span>    config = ParsedArgs()</div>
+<div class="line"><span class="lineno"> 2414</span>    <span class="comment"># get arguments</span></div>
+<div class="line"><span class="lineno"> 2415</span>    config_dict = config.get_args_dict()</div>
+<div class="line"><span class="lineno"> 2416</span>    <span class="keywordflow">return</span> config_dict</div>
+<div class="line"><span class="lineno"> 2417</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="AMAS_8py_source.html#l02361">amas.AMAS.main()</a>.</p>
+<p class="reference">References <a class="el" href="AMAS_8py_source.html#l02363">amas.AMAS.main()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="AMAS_8py_source.html#l02361">amas.AMAS.main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="AMAS_8py_source.html#l02363">amas.AMAS.main()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

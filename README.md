@@ -30,11 +30,11 @@ The AMAS commands are:
   convert           Convert to other file format.
   replicate         Create replicate data sets for phylogenetic jackknife.
   split             Split alignment according to a partitions file.
+  metapartitions    Runs `split` and concatenates the output.
   summary           Write alignment summary.
   remove            Remove taxa from alignment.
   translate         Translate DNA alignment into protein alignment.
   trim              Remove columns from alignment.
-  metapartitions    Runs `split` and concatenates the output.
 
 Use AMAS <command> -h for help with arguments of the command of interest
 
