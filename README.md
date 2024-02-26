@@ -180,7 +180,7 @@ matches = re.finditer(
 )
 ```
  This generally handles RAxML(-NG) and IQ-TREE2 partition files correctly, with the following caveats:
-- It doesn't recognize filenames after '=', so you can't a partition file that maps to multiple alignments, e.g.
+- It doesn't recognize filenames after '=', so you can't use a partition file that maps to multiple alignments, e.g.
 ```
 #nexus
 begin sets;
@@ -190,7 +190,7 @@ begin sets;
     charpartition mine = HKY:part1, GTR+G:part2, WAG+I+G:part3;
 end
 ```
-- The capture groups `<raxml>` and `<partition_name>` aim to be comprehensive, but note that unmatched edge-cases will fail silently. This includes model specification based on the full 'MULTISTATE' [datatype](https://github.com/amkozlov/raxml-ng/wiki/Input-data#state-encoding--order), as well as partition names containing metacharacter other than `&`, `.`, and `-` (see next point).
+- The capture groups `<raxml>` and `<partition_name>` aim to be comprehensive, but note that unmatched edge-cases will **fail silently**. This includes model specification based on the full 'MULTISTATE' [datatype](https://github.com/amkozlov/raxml-ng/wiki/Input-data#state-encoding--order), as well as partition names containing metacharacter other than `&`, `.`, and `-` (see next point).
 
 - Literal-metacharacter matching is now refined by capture group with explicit character class declarations. Metacharacters may be unavoidable when specifying complex models, but users should be aware that certain metacharacter pattern in *partition names* could lead to unexpected results, depending on the environment. `split` and `metapartitions` use unsanitized partition names as the (sub)alignment filenames, potentially leading to shell execution of filenames as command sequences in the context of a pipeline or wrapper script. For this reason, and because this script doesn't support the full 'MULTISTATE' datatype, the characters `$`, `(`, `)`, `*`, `` ` ` ``, `?`, `!`, `<` and `>` are excluded from the regex entirely.
 
