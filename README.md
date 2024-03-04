@@ -208,7 +208,7 @@ The above command takes the input superalignment `concat.fas` of `dna` data in `
 ![metapartitions_alncomp](https://github.com/JGLAHE/AMAS_JGLAHE/assets/86393993/7e9bc899-52ba-4205-bc46-9e554e533f24)
 Figure: [concat.fas](docs/README_assets/concat.fas) (left) converted to [concat.out.fas](docs/README_assets/concat.out.fas) (right) with `metapartitions` command; visualized in [Aliview](https://github.com/AliView/AliView) v1.28
 
-The `concat.fas` partition file `partitions.txt` is shown below. This includes loosely conforming examples of the three partition formatting types recognized by AMAS (the AMAS-default, RAxML(-NG)and IQ-TREE2-Nexus), which serves to demonstrate the tolerances the updated parser's regex. Note that the lack of '=' in IQ-TREE2-Nexus model specifications (as used in .best_scheme.nex and .best_model.nex files) means these lines are safely ignored.
+The `concat.fas` partition file `partitions.txt` is shown below. This includes loosely conforming examples of the three partition formatting types recognized by AMAS (the AMAS-default, RAxML(-NG)and IQ-TREE2-Nexus), which serves to demonstrate the updated parser's tolerances. Note that the lack of '=' in IQ-TREE2-Nexus model specifications (as used in .best_scheme.nex and .best_model.nex files) means these lines are safely ignored.
 ```
 charset     partition_A_pos1 =      7 - 21\3       
   charset s& = 8  -21\3
